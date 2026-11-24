@@ -96,14 +96,6 @@
       animation: shimmerText 5s linear infinite;
     }
 
-    header.hero-header .subtitle {
-      font-size: clamp(0.68rem, 1.3vw, 0.85rem);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(186, 230, 253, 0.78);
-      margin-top: 2px;
-    }
-
     @keyframes shimmerText {
       to {
         background-position: 220% center;
@@ -120,6 +112,7 @@
       justify-content: center;
       cursor: grab;
       overflow: hidden;
+      touch-action: none;
     }
 
     .stage-wrap:active {
@@ -222,7 +215,6 @@
   <div class="app-shell">
     <header class="hero-header">
       <h1>Happy Birthday BaoBao!</h1>
-      <div class="subtitle">Blue Roses · Gold Accents · Kinder Bueno · Just The Way You Are</div>
     </header>
 
     <main class="stage-wrap" id="stage">
@@ -235,7 +227,7 @@
       <button class="btn" id="zoom-btn">Zoom: 1x</button>
       <div class="divider"></div>
       <button class="btn music-btn" id="music-toggle">🔊 Bruno Mars - Just The Way You Are</button>
-      <span class="hint-tag">Drag to spin 360°</span>
+      <span class="hint-tag">Drag sideways to spin · Up/down to view top</span>
     </div>
   </div>
 
@@ -564,7 +556,57 @@
     })();
 
     // ---------------------------------------------------------
-    // B. FLOWER GENERATORS (Roses, Peonies, Ranunculus, Gold)
+    // B. LONG GREEN BOUQUET STEMS & LEAVES
+    // ---------------------------------------------------------
+    (function buildBouquetStems() {
+      // Stems emerge from beneath the flower heads and gather inside the wrap.
+      const stemCount = 34;
+      for (let i = 0; i < stemCount; i++) {
+        const a = (i / stemCount) * Math.PI * 2;
+        const spread = 5.2 + (i % 5) * 0.62;
+        const startX = Math.cos(a) * spread;
+        const startZ = Math.sin(a) * spread;
+        const endX = Math.cos(a + 0.12) * (1.5 + (i % 4) * 0.35);
+        const endZ = Math.sin(a + 0.12) * (1.5 + (i % 4) * 0.35);
+        const stemLen = 22 + (i % 7) * 1.25;
+
+        for (let j = 0; j <= 46; j++) {
+          const t = j / 46;
+          const x = startX + (endX - startX) * t + Math.sin(t * 5 + i) * 0.22;
+          const y = -4.5 - stemLen * t;
+          const z = startZ + (endZ - startZ) * t;
+          addPoint(x, y, z, 0.08, 1, 0.04, '|',
+            42 + (i % 3) * 8, 112 + (i % 4) * 9, 61 + (i % 3) * 7, 0.08);
+
+          // Alternating small leaves along each stem.
+          if (j > 8 && j % 8 === 0) {
+            const side = ((j / 8 + i) % 2 === 0) ? 1 : -1;
+            const leafX = x + side * 0.9;
+            const leafY = y + 0.45;
+            const leafZ = z + Math.cos(a) * 0.35;
+            addPoint(leafX, leafY, leafZ, side * 0.5, 0.5, 0.2,
+              '/', 92, 158, 91, 0.12);
+            addPoint(leafX + side * 0.38, leafY + 0.22, leafZ,
+              side * 0.7, 0.3, 0.1, '♦', 117, 177, 103, 0.16);
+          }
+        }
+      }
+
+      // A gathered bundle at the bottom, visible below the wrapping.
+      for (let i = 0; i < 18; i++) {
+        const a = (i / 18) * Math.PI * 2;
+        for (let j = 0; j <= 15; j++) {
+          const t = j / 15;
+          const r = 1.0 + t * 1.0;
+          addPoint(Math.cos(a) * r, -25.5 - t * 4.5,
+            Math.sin(a) * r, Math.cos(a), 0.2, Math.sin(a),
+            '|', 55, 126, 68, 0.08);
+        }
+      }
+    })();
+
+    // ---------------------------------------------------------
+    // C. FLOWER GENERATORS (Roses, Peonies, Ranunculus, Gold)
     // ---------------------------------------------------------
     function buildRose(cx, cy, cz, nx, ny, nz, radius, palette) {
       // Create orthonormal basis pointing along normal (nx, ny, nz)
@@ -858,12 +900,15 @@
     // 4. REAL-TIME 3D Z-BUFFERED ASCII RENDERER
     // =========================================================
     let angleY = 0.18;
+    let angleX = -0.10; // vertical viewing angle; drag up/down to look over/under the bouquet
     let isSpinning = true;
     let speedMult = 1;
     let zoomMult = 1;
     let isDragging = false;
     let lastClientX = 0;
+    let lastClientY = 0;
     let velocityY = 0;
+    let velocityX = 0;
 
     const camDist = 64;
     const fovX = 195;
@@ -884,10 +929,15 @@
       for (let i = 0; i < points.length; i++) {
         const p = points[i];
 
-        // Rotate point around Y axis
-        const rx = p.x * cosA + p.z * sinA;
-        const rz = -p.x * sinA + p.z * cosA;
-        const ry = p.y - 1.5; // center bouquet vertically
+        // Rotate around Y (horizontal drag), then X (vertical drag).
+        const xYaw = p.x * cosA + p.z * sinA;
+        const zYaw = -p.x * sinA + p.z * cosA;
+        const yBase = p.y - 1.5; // center bouquet vertically
+        const cosX = Math.cos(angleX);
+        const sinX = Math.sin(angleX);
+        const ry = yBase * cosX - zYaw * sinX;
+        const rz = yBase * sinX + zYaw * cosX;
+        const rx = xYaw;
 
         const depth = camDist - rz;
         if (depth <= 4) continue;
@@ -903,9 +953,11 @@
           zBuffer[idx] = rz;
 
           // Rotate normal for directional lighting
-          const rnx = p.nx * cosA + p.nz * sinA;
-          const rnz = -p.nx * sinA + p.nz * cosA;
-          const rny = p.ny;
+          const nxYaw = p.nx * cosA + p.nz * sinA;
+          const nzYaw = -p.nx * sinA + p.nz * cosA;
+          const rnx = nxYaw;
+          const rny = p.ny * cosX - nzYaw * sinX;
+          const rnz = p.ny * sinX + nzYaw * cosX;
 
           const diff = Math.max(0, rnx * lx + rny * ly + rnz * lz);
           const shade = Math.min(1.25, 0.48 + diff * 0.68 + p.emissive);
@@ -953,9 +1005,16 @@
       if (!isDragging) {
         if (isSpinning) {
           angleY += 0.014 * speedMult;
-        } else if (Math.abs(velocityY) > 0.0002) {
-          angleY += velocityY;
-          velocityY *= 0.94;
+        } else {
+          if (Math.abs(velocityY) > 0.0002) {
+            angleY += velocityY;
+            velocityY *= 0.94;
+          }
+          if (Math.abs(velocityX) > 0.0002) {
+            angleX += velocityX;
+            velocityX *= 0.94;
+            angleX = Math.max(-Math.PI * 0.48, Math.min(Math.PI * 0.48, angleX));
+          }
         }
       }
       renderFrame();
@@ -968,18 +1027,28 @@
     stageEl.addEventListener('pointerdown', (e) => {
       isDragging = true;
       lastClientX = e.clientX;
+      lastClientY = e.clientY;
       velocityY = 0;
+      velocityX = 0;
+      if (stageEl.setPointerCapture) stageEl.setPointerCapture(e.pointerId);
     });
 
-    window.addEventListener('pointermove', (e) => {
+    stageEl.addEventListener('pointermove', (e) => {
       if (!isDragging) return;
       const dx = e.clientX - lastClientX;
+      const dy = e.clientY - lastClientY;
       lastClientX = e.clientX;
+      lastClientY = e.clientY;
       velocityY = dx * 0.0085;
+      velocityX = dy * 0.007;
       angleY += velocityY;
+      angleX = Math.max(-Math.PI * 0.48, Math.min(Math.PI * 0.48, angleX + velocityX));
     });
 
-    window.addEventListener('pointerup', () => {
+    stageEl.addEventListener('pointerup', () => {
+      isDragging = false;
+    });
+    stageEl.addEventListener('pointercancel', () => {
       isDragging = false;
     });
 
