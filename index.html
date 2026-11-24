@@ -220,7 +220,7 @@
     }
 
 
-    /* Four detailed ASCII portraits, kept in the corners so the bouquet stays clear */
+    /* Large floating ASCII portraits — no frames or card backgrounds */
     .portrait-ascii-layer {
       position: fixed;
       inset: 0;
@@ -231,58 +231,77 @@
 
     .portrait-ascii {
       position: absolute;
-      width: clamp(112px, 17vw, 238px);
-      max-height: 34vh;
+      width: clamp(190px, 27vw, 390px);
+      max-height: 43vh;
       overflow: hidden;
-      padding: 7px 6px;
-      border: 1px solid rgba(242, 201, 107, 0.28);
-      border-radius: 12px;
-      background: linear-gradient(145deg, rgba(7, 13, 24, 0.30), rgba(7, 13, 24, 0.08));
-      box-shadow: 0 0 18px rgba(242, 201, 107, 0.10), inset 0 0 18px rgba(255,255,255,0.025);
-      opacity: 0.58;
-      -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
-      mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      opacity: 0.76;
+      -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+      filter: drop-shadow(0 0 7px rgba(242, 201, 107, 0.15));
     }
 
     .portrait-ascii pre {
-      color: #f4d994;
+      margin: 0;
       font-family: "Cascadia Mono", "Fira Code", Consolas, monospace;
-      font-size: clamp(2.2px, 0.27vw, 3.6px);
+      font-size: clamp(3.5px, 0.43vw, 5.4px);
       line-height: 1.02;
       letter-spacing: 0;
       white-space: pre;
-      text-shadow: 0 0 5px rgba(242, 201, 107, 0.48);
+      background: linear-gradient(145deg, #f7d9bd 0%, #e7b89a 23%, #d9a16e 42%, #8d654b 64%, #f2d6a0 82%, #fff0d0 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 5px rgba(224, 174, 127, 0.16);
     }
 
-    .portrait-ascii.top-left { top: 13%; left: 10px; }
-    .portrait-ascii.top-right { top: 13%; right: 10px; }
-    .portrait-ascii.bottom-left { bottom: 15%; left: 10px; }
-    .portrait-ascii.bottom-right { bottom: 15%; right: 10px; }
+    /* Subtle palette differences echo the original photo lighting and hair tones */
+    .portrait-ascii.top-left pre {
+      background-image: linear-gradient(145deg, #f6d2b7 0%, #d9a17e 30%, #684b3b 58%, #2b2524 78%, #f1c99f 100%);
+    }
+    .portrait-ascii.top-right pre {
+      background-image: linear-gradient(145deg, #f7d8c5 0%, #e6b49a 30%, #5b4038 58%, #241f20 80%, #f4d3b3 100%);
+    }
+    .portrait-ascii.bottom-left pre {
+      background-image: linear-gradient(145deg, #f5d7bd 0%, #dca987 30%, #80583f 58%, #342923 80%, #f5d8b1 100%);
+    }
+    .portrait-ascii.bottom-right pre {
+      background-image: linear-gradient(145deg, #f8d9c1 0%, #dca889 28%, #75513f 58%, #282322 80%, #f3d2ae 100%);
+    }
+
+    .portrait-ascii.top-left { top: 10%; left: 12px; }
+    .portrait-ascii.top-right { top: 10%; right: 12px; }
+    .portrait-ascii.bottom-left { bottom: 12%; left: 12px; }
+    .portrait-ascii.bottom-right { bottom: 12%; right: 12px; }
 
     @media (max-width: 640px) {
       .portrait-ascii {
-        width: clamp(76px, 21vw, 118px);
-        max-height: 22vh;
-        padding: 4px 3px;
-        border-radius: 8px;
-        opacity: 0.38;
+        width: clamp(118px, 31vw, 190px);
+        max-height: 31vh;
+        opacity: 0.67;
       }
       .portrait-ascii pre {
-        font-size: clamp(1.8px, 0.52vw, 2.4px);
-        line-height: 1;
+        font-size: clamp(2.65px, 0.72vw, 3.8px);
+        line-height: 1.01;
       }
       .portrait-ascii.top-left,
-      .portrait-ascii.top-right { top: 12%; }
+      .portrait-ascii.top-right { top: 11%; }
       .portrait-ascii.bottom-left,
-      .portrait-ascii.bottom-right { bottom: 17%; }
+      .portrait-ascii.bottom-right { bottom: 14%; }
     }
 
     @media (max-width: 380px) {
       .portrait-ascii {
-        width: 70px;
-        opacity: 0.30;
+        width: 30vw;
+        max-height: 27vh;
+        opacity: 0.62;
       }
-      .portrait-ascii pre { font-size: 1.75px; }
+      .portrait-ascii pre { font-size: 2.5px; }
     }
 
     /* Hidden YouTube iframe for background audio */
