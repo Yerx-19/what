@@ -1,29 +1,67 @@
 
+/* Birthday header */
+.birthday-header {
+    text-align: center;
+    padding: 35px 15px 15px;
+    color: #183b63;
+}
+
+.birthday-header h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #173d69;
+}
+
+.birthday-header p {
+    color: #6485a6;
+    margin-top: 10px;
+    font-size: 0.95rem;
+}
+
+.header-decoration {
+    color: #c69a42;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.header-line {
+    width: 90px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #c69a42, transparent);
+    margin: 22px auto;
+}
+
+/* Bouquet rotation */
 .real-bouquet {
     width: min(100%, 440px);
     height: auto;
+    display: block;
     overflow: visible;
-    filter: drop-shadow(0 20px 22px rgba(10, 35, 65, 0.24));
-    animation: bouquetFloat 6s ease-in-out infinite;
+    transform-origin: center center;
+    animation: bouquetSpin 35s linear infinite;
+    filter: drop-shadow(0 20px 22px rgba(10,35,65,.24));
 }
 
-@keyframes bouquetFloat {
-    0%, 100% {
-        transform: translateY(0) rotate(-1deg);
+@keyframes bouquetSpin {
+    from {
+        transform: rotate(0deg);
     }
-    50% {
-        transform: translateY(-7px) rotate(1deg);
+    to {
+        transform: rotate(360deg);
     }
 }
 
 .art-card {
-    background:
-        radial-gradient(circle at 50% 40%, #e8f2ff, #b8d0e9);
+    background: radial-gradient(circle, #e8f2ff, #b8d0e9);
     overflow: hidden;
+    display: grid;
+    place-items: center;
 }
 
 @media (max-width: 760px) {
     .real-bouquet {
-        width: min(100%, 380px);
+        width: min(100%, 370px);
     }
 }
