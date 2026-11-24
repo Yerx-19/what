@@ -233,8 +233,8 @@
       position: absolute;
       display: block;
       width: max-content;
-      max-width: 43vw;
-      max-height: 46vh;
+      max-width: 46vw;
+      max-height: 48vh;
       overflow: hidden;
       padding: 0;
       margin: 0;
@@ -242,12 +242,12 @@
       border-radius: 0;
       background: transparent;
       box-shadow: none;
-      opacity: 0.94;
+      opacity: 1;
       text-align: left;
       transform: none;
       -webkit-mask-image: linear-gradient(to bottom, #000 94%, transparent 100%);
       mask-image: linear-gradient(to bottom, #000 94%, transparent 100%);
-      filter: drop-shadow(0 0 9px rgba(242, 201, 107, 0.23));
+      filter: saturate(1.22) contrast(1.12) brightness(1.12);
     }
 
     .portrait-ascii pre {
@@ -258,8 +258,8 @@
       padding: 0;
       text-align: left;
       font-family: "Cascadia Mono", "Fira Code", Consolas, monospace;
-      font-size: clamp(6px, 0.72vw, 9px);
-      line-height: 1.02;
+      font-size: clamp(6.5px, 0.78vw, 10px);
+      line-height: 1.06;
       letter-spacing: 0;
       white-space: pre;
       background: linear-gradient(135deg, #fff0d5 0%, #f2bd91 18%, #d88c68 34%, #8e5a43 52%, #302322 68%, #e9b77d 84%, #fff0d5 100%);
@@ -267,7 +267,7 @@
       background-clip: text;
       color: transparent;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 7px rgba(224, 174, 127, 0.24);
+      text-shadow: none;
     }
 
 
@@ -305,14 +305,17 @@
     .portrait-ascii.bottom-right { bottom: 8px; right: 8px; }
 
     @media (max-width: 640px) {
+      .portrait-ascii, .portrait-ascii pre { text-shadow: none !important; box-shadow: none !important; }
       .portrait-ascii {
-        max-width: 42vw;
-        max-height: 34vh;
-        opacity: 0.91;
+        max-width: 47vw;
+        max-height: 42vh;
+        opacity: 1;
+        filter: saturate(1.2) contrast(1.1) brightness(1.12);
       }
       .portrait-ascii pre {
-        font-size: clamp(3.8px, 1.08vw, 5.4px);
-        line-height: 1.01;
+        font-size: clamp(4.4px, 1.22vw, 6.4px);
+        line-height: 1.08;
+        text-shadow: none;
       }
       .portrait-ascii.top-left { top: max(7px, env(safe-area-inset-top)); left: 5px; }
       .portrait-ascii.top-right { top: max(7px, env(safe-area-inset-top)); right: 5px; }
@@ -321,8 +324,8 @@
     }
 
     @media (max-width: 380px) {
-      .portrait-ascii { max-width: 43vw; max-height: 30vh; opacity: 0.9; }
-      .portrait-ascii pre { font-size: 3.6px; }
+      .portrait-ascii { max-width: 48vw; max-height: 38vh; opacity: 1; filter: saturate(1.18) contrast(1.1) brightness(1.1); }
+      .portrait-ascii pre { font-size: 4.1px; line-height: 1.06; text-shadow: none; }
     }
 
     /* Hidden YouTube iframe for background audio */
@@ -354,6 +357,7 @@
     }
 
     @media (max-width: 640px) {
+      .portrait-ascii, .portrait-ascii pre { text-shadow: none !important; box-shadow: none !important; }
       .app-shell {
         padding: max(8px, env(safe-area-inset-top)) 8px max(9px, env(safe-area-inset-bottom));
         gap: 6px;
