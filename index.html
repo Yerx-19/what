@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Bouquet For You ✨</title>
+    <!-- Google Fonts for elegant serif headings and handwritten gift card script -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & THEMES (In-Text CSS Styling)
+           ========================================================================== */
+        :root {
+            /* Default Theme: Morning Meadow (Soft Cream & Sage) */
+            --bg-gradient-1: #fdfbf7;
+            --bg-gradient-2: #f4ece1;
+            --text-primary: #3b322c;
+            --text-secondary: #6e5f56;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(212, 185, 150, 0.4);
+            --accent-color: #d96b78;
+            
+            /* Wrapping Paper Colors (Kraft Paper) */
+            --wrap-back: #b88c63;
+            --wrap-front-left: #cfa47b;
+            --wrap-front-right: #c2956b;
+            --wrap-inner: #efe4d6;
+            --ribbon-color: #c84b59;
+            --ribbon-dark: #9e3340;
+            --ribbon-light: #e06c79;
+
+            /* Flower Palette */
+            --rose-1-outer: #e05263;
+            --rose-1-mid: #f07180;
+            --rose-1-inner: #ff9aa6;
+            --rose-2-outer: #f28482;
+            --rose-2-mid: #f5cac3;
+            --rose-2-inner: #ffe5e0;
+            --tulip-1: #ff758f;
+            --tulip-2: #ffb3c1;
+            --daisy-petal: #ffffff;
+            --daisy-center: #f6bd60;
+            --leaf-dark: #3a5a40;
+            --leaf-mid: #588157;
+            --leaf-light: #84a98c;
+        }
+
+        /* Theme 2: Pastel Dream */
+        [data-theme="pastel"] {
+            --bg-gradient-1: #fff5f8;
+            --bg-gradient-2: #ede7f6;
+            --text-primary: #4a3b52;
+            --text-secondary: #7c6987;
+            --card-bg: rgba(255, 255, 255, 0.88);
+            --card-border: rgba(216, 180, 226, 0.5);
+            --accent-color: #b565a7;
+
+            --wrap-back: #d8bfd8;
+            --wrap-front-left: #ebd9eb;
+            --wrap-front-right: #dfc5df;
+            --wrap-inner: #ffffff;
+            --ribbon-color: #9b5de5;
+            --ribbon-dark: #743eb8;
+            --ribbon-light: #bb8cf5;
+
+            --rose-1-outer: #c77dff;
+            --rose-1-mid: #e0aaff;
+            --rose-1-inner: #f3d5ff;
+            --tulip-1: #ff85a1;
+            --tulip-2: #fbb1bd;
+        }
+
+        /* Theme 3: Midnight Romance */
+        [data-theme="midnight"] {
+            --bg-gradient-1: #161824;
+            --bg-gradient-2: #241e30;
+            --text-primary: #f5ebe0;
+            --text-secondary: #c7b8b0;
+            --card-bg: rgba(34, 32, 48, 0.85);
+            --card-border: rgba(212, 163, 115, 0.3);
+            --accent-color: #e5989b;
+
+            --wrap-back: #2b2d42;
+            --wrap-front-left: #3d405b;
+            --wrap-front-right: #32354d;
+            --wrap-inner: #d4a373;
+            --ribbon-color: #d4a373;
+            --ribbon-dark: #a97c50;
+            --ribbon-light: #ebd0b0;
+
+            --rose-1-outer: #9e2a2b;
+            --rose-1-mid: #c94042;
+            --rose-1-inner: #e06668;
+            --tulip-1: #e07a5f;
+            --tulip-2: #f2cc8f;
+        }
+
+        /* ==========================================================================
+           2. RESET & BASE LAYOUT
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at top center, var(--bg-gradient-1), var(--bg-gradient-2));
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow-x: hidden;
+            transition: background 0.6s ease, color 0.4s ease;
+            position: relative;
+            padding: 1rem;
+        }
+
+        /* Ambient Floating Petals Background Container */
+        #petals-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* ==========================================================================
+           3. HEADER & CONTROLS BAR
+           ========================================================================== */
+        header {
+            width: 100%;
+            max-width: 720px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            z-index: 20;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .title-group h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .title-group p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-top: 0.15rem;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           4. BOUQUET STAGE & CSS FLORAL ARCHITECTURE
+           ========================================================================== */
+        .stage {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            margin: auto 0;
+            user-select: none;
+        }
+
+        /* Gentle Breeze Animation on the whole bouquet */
+        .bouquet-wrapper {
+            position: relative;
+            width: 360px;
+            height: 480px;
+            transform-origin: bottom center;
+            animation: gentleSway 6s ease-in-out infinite;
+        }
+
+        @keyframes gentleSway {
+            0%, 100% { transform: rotate(-1.5deg); }
+            50% { transform: rotate(1.8deg); }
+        }
+
+        /* --- Back Wrapping Paper Cone --- */
+        .paper-back {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 270px;
+            height: 310px;
+            background: linear-gradient(135deg, var(--wrap-inner) 0%, var(--wrap-back) 45%);
+            clip-path: polygon(10% 0%, 90% 0%, 66% 100%, 34% 100%);
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            z-index: 1;
+            transition: background 0.5s ease;
+        }
+
+        /* Subtle paper crinkle texture overlay */
+        .paper-back::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.06) 0px,
+                rgba(255, 255, 255, 0.06) 10px,
+                rgba(0, 0, 0, 0.03) 10px,
+                rgba(0, 0, 0, 0.03) 20px
+            );
+        }
+
+        /* --- Stems Bundle (Visible at bottom) --- */
+        .stems-bundle {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 76px;
+            height: 110px;
+            z-index: 2;
+        }
+
+        .stem {
+            position: absolute;
+            bottom: 0;
+            width: 8px;
+            height: 100px;
+            background: linear-gradient(to right, var(--leaf-dark), var(--leaf-mid));
+            border-radius: 4px;
+            transform-origin: top center;
+        }
+        .stem:nth-child(1) { left: 14px; transform: rotate(10deg); }
+        .stem:nth-child(2) { left: 26px; transform: rotate(4deg); height: 108px; }
+        .stem:nth-child(3) { left: 36px; transform: rotate(-2deg); height: 112px; }
+        .stem:nth-child(4) { left: 48px; transform: rotate(-8deg); }
+        .stem:nth-child(5) { left: 58px; transform: rotate(-14deg); height: 95px; }
+
+        /* --- Foliage & Eucalyptus Leaves --- */
+        .greenery-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 48px;
+            height: 75px;
+            background: radial-gradient(circle at 30% 30%, var(--leaf-light), var(--leaf-dark));
+            border-radius: 50% 0 50% 0;
+            box-shadow: inset -3px -3px 8px rgba(0, 0, 0, 0.2);
+            transform-origin: bottom center;
+        }
+
+        /* Leaf vein line */
+        .leaf::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 80%;
+            background: rgba(255, 255, 255, 0.25);
+            top: 10%;
+            left: 48%;
+            transform: rotate(32deg);
+            border-radius: 2px;
+        }
+
+        .l1 { top: 82px; left: 55px; transform: rotate(-48deg) scale(1.1); }
+        .l2 { top: 75px; right: 55px; transform: rotate(45deg) scaleX(-1) scale(1.1); }
+        .l3 { top: 135px; left: 35px; transform: rotate(-68deg) scale(0.95); }
+        .l4 { top: 135px; right: 35px; transform: rotate(68deg) scaleX(-1) scale(0.95); }
+        .l5 { top: 62px; left: 118px; transform: rotate(-18deg) scale(1.05); }
+        .l6 { top: 62px; right: 118px; transform: rotate(18deg) scaleX(-1) scale(1.05); }
+
+        /* Baby's Breath Sprigs (Gypsophila) */
+        .babys-breath {
+            position: absolute;
+            width: 11px;
+            height: 11px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 
+                14px -8px 0 -1px #fffdf9,
+                -12px -6px 0 -2px #ffffff,
+                8px 12px 0 -1px #fff8eb,
+                -10px 10px 0 -2px #ffffff,
+                0 0 8px rgba(255, 255, 255, 0.8);
+            z-index: 4;
+            animation: twinkleBreath 3.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkleBreath {
+            0% { transform: scale(0.95); opacity: 0.88; }
+            100% { transform: scale(1.08); opacity: 1; }
+        }
+
+        .bb1 { top: 96px; left: 92px; }
+        .bb2 { top: 92px; right: 92px; animation-delay: 0.7s; }
+        .bb3 { top: 158px; left: 68px; animation-delay: 1.4s; }
+        .bb4 { top: 155px; right: 68px; animation-delay: 2.1s; }
+        .bb5 { top: 76px; left: 175px; animation-delay: 1s; }
+
+        /* --- Interactive Flowers Container --- */
+        .flowers-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+        }
+
+        .flower {
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.16));
+        }
+
+        .flower:hover {
+            transform: scale(1.12) translateY(-4px) !important;
+            z-index: 15;
+        }
+
+        .flower.bloom-pop {
+            animation: bloomPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes bloomPop {
+            0% { transform: scale(1); }
+            45% { transform: scale(1.26) rotate(8deg); }
+            100% { transform: scale(1); }
+        }
+
+        /* === FLOWER TYPE 1: CSS LAYERED ROSE === */
+        .rose {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, var(--rose-1-mid), var(--rose-1-outer));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rose.soft-pink {
+            background: radial-gradient(circle at 35% 35%, var(--rose-2-mid), var(--rose-2-outer));
+        }
+
+        /* Outer sculpted petals */
+        .rose::before {
+            content: '';
+            position: absolute;
+            width: 62px;
+            height: 62px;
+            border-radius: 48% 52% 45% 55% / 55% 45% 52% 48%;
+            background: var(--rose-1-mid);
+            box-shadow: 
+                inset 4px 4px 10px rgba(255, 255, 255, 0.35),
+                inset -4px -4px 10px rgba(0, 0, 0, 0.2),
+                0 0 0 4px rgba(0, 0, 0, 0.06);
+            transform: rotate(25deg);
+        }
+
+        .rose.soft-pink::before {
+            background: var(--rose-2-mid);
+        }
+
+        /* Inner spiral bud */
+        .rose::after {
+            content: '';
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            border-radius: 52% 48% 55% 45%;
+            background: radial-gradient(circle at 30% 30%, var(--rose-1-inner), var(--rose-1-outer));
+            box-shadow: 
+                inset 2px 2px 6px rgba(255, 255, 255, 0.5),
+                0 3px 6px rgba(0, 0, 0, 0.22);
+            transform: rotate(-15deg);
+        }
+
+        .rose.soft-pink::after {
+            background: radial-gradient(circle at 30% 30%, var(--rose-2-inner), var(--rose-2-outer));
+        }
+
+        /* === FLOWER TYPE 2: CSS TULIP === */
+        .tulip {
+            width: 62px;
+            height: 74px;
+            position: absolute;
+        }
+
+        .tulip-petal-left,
+        .tulip-petal-right,
+        .tulip-petal-center {
+            position: absolute;
+            bottom: 0;
+            border-radius: 50% 50% 35% 35%;
+        }
+
+        .tulip-petal-left {
+            left: 2px;
+            width: 34px;
+            height: 64px;
+            background: linear-gradient(to top, var(--tulip-1), var(--tulip-2));
+            transform: rotate(-16deg);
+            box-shadow: inset 2px 2px 6px rgba(255, 255, 255, 0.4);
+        }
+
+        .tulip-petal-right {
+            right: 2px;
+            width: 34px;
+            height: 64px;
+            background: linear-gradient(to top, var(--tulip-1), var(--tulip-2));
+            transform: rotate(16deg);
+            box-shadow: inset -2px 2px 6px rgba(255, 255, 255, 0.4);
+        }
+
+        .tulip-petal-center {
+            left: 50%;
+            transform: translateX(-50%);
+            width: 36px;
+            height: 70px;
+            background: linear-gradient(to top, var(--tulip-1) 15%, #ffd6e0 100%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 2;
+        }
+
+        /* === FLOWER TYPE 3: CSS DAISY === */
+        .daisy {
+            width: 68px;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .daisy-petals {
+            position: absolute;
+            width: 18px;
+            height: 66px;
+            background: var(--daisy-petal);
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+
+        .daisy-petals:nth-child(2) { transform: rotate(45deg); }
+        .daisy-petals:nth-child(3) { transform: rotate(90deg); }
+        .daisy-petals:nth-child(4) { transform: rotate(135deg); }
+
+        .daisy-core {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffe194, var(--daisy-center));
+            box-shadow: inset -2px -2px 4px rgba(180, 110, 10, 0.35);
+            z-index: 2;
+        }
+
+        /* Positioning all flowers harmoniously inside the wrap */
+        .f-rose-center { top: 122px; left: 139px; transform: scale(1.08); z-index: 8; }
+        .f-rose-left   { top: 145px; left: 76px; transform: rotate(-14deg) scale(0.96); z-index: 7; }
+        .f-rose-right  { top: 145px; right: 76px; transform: rotate(14deg) scale(0.96); z-index: 7; }
+        .f-rose-top    { top: 76px;  left: 144px; transform: scale(0.92); z-index: 6; }
+
+        .f-tulip-left  { top: 92px;  left: 92px;  transform: rotate(-22deg); z-index: 6; }
+        .f-tulip-right { top: 92px;  right: 92px; transform: rotate(22deg); z-index: 6; }
+
+        .f-daisy-left  { top: 185px; left: 105px; transform: rotate(-10deg) scale(0.92); z-index: 9; }
+        .f-daisy-right { top: 185px; right: 105px; transform: rotate(12deg) scale(0.92); z-index: 9; }
+
+        /* --- Front Folded Wrapping Paper --- */
+        .paper-front-left {
+            position: absolute;
+            bottom: 72px;
+            left: 52px;
+            width: 175px;
+            height: 215px;
+            background: linear-gradient(155deg, var(--wrap-front-left), var(--wrap-back));
+            clip-path: polygon(0% 12%, 100% 45%, 82% 100%, 42% 100%);
+            border-radius: 12px;
+            z-index: 10;
+            box-shadow: 4px -4px 16px rgba(0, 0, 0, 0.14);
+            pointer-events: none;
+            transition: background 0.5s ease;
+        }
+
+        .paper-front-right {
+            position: absolute;
+            bottom: 72px;
+            right: 52px;
+            width: 175px;
+            height: 215px;
+            background: linear-gradient(205deg, var(--wrap-front-right), var(--wrap-back));
+            clip-path: polygon(0% 45%, 100% 12%, 58% 100%, 18% 100%);
+            border-radius: 12px;
+            z-index: 11;
+            box-shadow: -4px -4px 16px rgba(0, 0, 0, 0.16);
+            pointer-events: none;
+            transition: background 0.5s ease;
+        }
+
+        /* --- Silk Ribbon Bow --- */
+        .ribbon-container {
+            position: absolute;
+            bottom: 92px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 90px;
+            z-index: 12;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .ribbon-container:hover {
+            transform: translateX(-50%) scale(1.06);
+        }
+
+        /* Horizontal band around cone waist */
+        .ribbon-band {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 82px;
+            height: 20px;
+            background: linear-gradient(to bottom, var(--ribbon-light), var(--ribbon-color), var(--ribbon-dark));
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Left and Right Bow Loops */
+        .bow-loop-left,
+        .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 48px;
+            height: 36px;
+            background: radial-gradient(circle at 30% 30%, var(--ribbon-light), var(--ribbon-color));
+            border-radius: 50% 50% 40% 40%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .bow-loop-left {
+            left: 24px;
+            transform: rotate(-18deg);
+        }
+
+        .bow-loop-right {
+            right: 24px;
+            transform: rotate(18deg);
+        }
+
+        /* Flowing Ribbon Tails */
+        .bow-tail-left,
+        .bow-tail-right {
+            position: absolute;
+            top: 26px;
+            width: 22px;
+            height: 62px;
+            background: linear-gradient(to bottom, var(--ribbon-color), var(--ribbon-dark));
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%);
+        }
+
+        .bow-tail-left {
+            left: 48px;
+            transform: rotate(18deg);
+        }
+
+        .bow-tail-right {
+            right: 48px;
+            transform: rotate(-18deg);
+        }
+
+        /* Center Knot */
+        .bow-knot {
+            position: absolute;
+            top: 9px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 22px;
+            background: radial-gradient(circle at 35% 35%, var(--ribbon-light), var(--ribbon-dark));
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+            z-index: 2;
+        }
+
+        /* ==========================================================================
+           5. INTERACTIVE GIFT CARD & FLOWER NOTE TOAST
+           ========================================================================== */
+        .note-toast {
+            position: fixed;
+            top: 84px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-15px);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            padding: 0.65rem 1.25rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 40;
+            text-align: center;
+            max-width: 90vw;
+        }
+
+        .note-toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .gift-card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 1.1rem 1.4rem;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.07);
+            z-index: 20;
+            text-align: center;
+            position: relative;
+            transition: background 0.5s ease, border-color 0.5s ease;
+        }
+
+        .gift-card-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .gift-message {
+            font-family: 'Caveat', cursive;
+            font-size: 1.65rem;
+            line-height: 1.25;
+            color: var(--text-primary);
+            outline: none;
+            border-radius: 8px;
+            padding: 0.2rem 0.4rem;
+            transition: background 0.2s ease;
+        }
+
+        .gift-message:focus {
+            background: rgba(212, 163, 115, 0.12);
+        }
+
+        .gift-sender {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 0.35rem;
+        }
+
+        /* ==========================================================================
+           6. SPARKLES & FLOATING PETAL PARTICLES
+           ========================================================================== */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1.2rem;
+            z-index: 50;
+            animation: sparkleFloat 0.9s ease-out forwards;
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2) rotate(180deg);
+            }
+        }
+
+        .falling-petal {
+            position: absolute;
+            top: -30px;
+            width: 14px;
+            height: 18px;
+            background: var(--rose-2-outer);
+            border-radius: 60% 0 60% 0;
+            opacity: 0.55;
+            animation: fallDown linear forwards;
+        }
+
+        @keyframes fallDown {
+            0% {
+                transform: translateY(0) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.65;
+            }
+            85% {
+                opacity: 0.55;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg) translateX(60px);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Tweaks for Compact Screens */
+        @media (max-width: 420px) {
+            .stage {
+                height: 450px;
+            }
+            .bouquet-wrapper {
+                transform: scale(0.86);
+            }
+            @keyframes gentleSway {
+                0%, 100% { transform: scale(0.86) rotate(-1.5deg); }
+                50% { transform: scale(0.86) rotate(1.8deg); }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Falling Petals Container -->
+    <div id="petals-container" aria-hidden="true"></div>
+
+    <!-- Floating Flower Meaning Toast -->
+    <div id="note-toast" class="note-toast" role="status" aria-live="polite">
+        Click any flower to reveal its hidden message 🌸
+    </div>
+
+    <!-- Header & Interactive Controls -->
+    <header>
+        <div class="title-group">
+            <h1>Freshly Picked For You</h1>
+            <p>Tap any bloom for sparkles &amp; sweet notes</p>
+        </div>
+        <div class="controls">
+            <button id="theme-btn" class="btn" title="Switch Bouquet Wrap & Theme">
+                🎨 <span id="theme-label">Kraft Meadow</span>
+            </button>
+            <button id="shower-btn" class="btn" title="Shower Petals">
+                🌸 Petal Shower
+            </button>
+            <button id="share-btn" class="btn" title="Copy Shareable Link with Your Note">
+                🔗 Copy Link
+            </button>
+        </div>
+    </header>
+
+    <!-- Main CSS Bouquet Stage -->
+    <main class="stage">
+        <div class="bouquet-wrapper" id="bouquet">
+            
+            <!-- Back Wrapping Paper Cone -->
+            <div class="paper-back"></div>
+
+            <!-- Stems Bundle -->
+            <div class="stems-bundle">
+                <div class="stem"></div>
+                <div class="stem"></div>
+                <div class="stem"></div>
+                <div class="stem"></div>
+                <div class="stem"></div>
+            </div>
+
+            <!-- Lush Eucalyptus Foliage -->
+            <div class="greenery-layer">
+                <div class="leaf l1"></div>
+                <div class="leaf l2"></div>
+                <div class="leaf l3"></div>
+                <div class="leaf l4"></div>
+                <div class="leaf l5"></div>
+                <div class="leaf l6"></div>
+            </div>
+
+            <!-- Baby's Breath Accents -->
+            <div class="babys-breath bb1"></div>
+            <div class="babys-breath bb2"></div>
+            <div class="babys-breath bb3"></div>
+            <div class="babys-breath bb4"></div>
+            <div class="babys-breath bb5"></div>
+
+            <!-- Interactive CSS Flowers -->
+            <div class="flowers-layer">
+                <!-- Top Rose -->
+                <div class="flower rose soft-pink f-rose-top" 
+                     data-message="Pink Rose: Admiration, sweetness, and gratitude for having you in my life."></div>
+
+                <!-- Left & Right Tulips -->
+                <div class="flower tulip f-tulip-left" 
+                     data-message="Spring Tulip: Wishing you bright days, fresh beginnings, and endless joy.">
+                    <div class="tulip-petal-left"></div>
+                    <div class="tulip-petal-right"></div>
+                    <div class="tulip-petal-center"></div>
+                </div>
+
+                <div class="flower tulip f-tulip-right" 
+                     data-message="Blush Tulip: Sending warmth and a gentle reminder of how appreciated you are.">
+                    <div class="tulip-petal-left"></div>
+                    <div class="tulip-petal-right"></div>
+                    <div class="tulip-petal-center"></div>
+                </div>
+
+                <!-- Center Hero Crimson Rose -->
+                <div class="flower rose f-rose-center" 
+                     data-message="Crimson Rose: Deep affection, timeless beauty, and heartfelt love."></div>
+
+                <!-- Left & Right Roses -->
+                <div class="flower rose soft-pink f-rose-left" 
+                     data-message="Garden Rose: You make ordinary moments feel extraordinary."></div>
+
+                <div class="flower rose f-rose-right" 
+                     data-message="Velvet Rose: Here’s to celebrating you today and always!"></div>
+
+                <!-- Left & Right Daisies -->
+                <div class="flower daisy f-daisy-left" 
+                     data-message="Sunny Daisy: Pure happiness, loyal friendship, and cheerful smiles.">
+                    <div class="daisy-petals"></div>
+                    <div class="daisy-petals"></div>
+                    <div class="daisy-petals"></div>
+                    <div
