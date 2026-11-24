@@ -435,6 +435,21 @@
       .controls-bar { padding-top: 5px; padding-bottom: 5px; }
       .btn { min-height: 32px; padding-top: 5px; padding-bottom: 5px; }
     }
+
+    /* Desktop portrait fit: prevent the lower rows from being clipped.
+       Mobile rules above remain unchanged because their sizing is already correct. */
+    @media (min-width: 641px) {
+      .portrait-ascii {
+        max-height: none !important;
+        overflow: visible !important;
+        -webkit-mask-image: none !important;
+        mask-image: none !important;
+      }
+      .portrait-ascii pre {
+        font-size: clamp(4px, 0.38vw, 6px) !important;
+        line-height: 1.02 !important;
+      }
+    }
   </style>
 </head>
 <body>
