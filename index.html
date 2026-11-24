@@ -1,838 +1,193 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday BaoBao! 💙</title>
+<section class="ascii-art">
+    <div class="ascii-title">
+        A FLOWER MADE OF A THOUSAND CHARACTERS
+    </div>
+
+    <div class="terminal">
+        <canvas id="asciiFlower"></canvas>
+    </div>
+
+    <p class="ascii-caption">
+        "Send this to your favorite person 💗"
+    </p>
+</section>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    font-family: 'DM Sans', sans-serif;
-    color: #183b63;
-    background:
-        radial-gradient(circle at 15% 10%, white, transparent 35%),
-        linear-gradient(135deg, #f4f9ff, #d8eaff, #b8d4f0);
-}
-
-.page {
-    max-width: 1150px;
-    margin: auto;
-    padding: 30px 22px;
-}
-
-.birthday-header {
+.ascii-art {
+    padding: 50px 15px;
     text-align: center;
-    padding: 25px 10px 35px;
 }
 
-.header-decoration {
-    font-size: 30px;
-    color: #c69a42;
-}
-
-h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.7rem);
-    color: #173d69;
-    margin-top: 10px;
-}
-
-.birthday-header p {
-    color: #6485a6;
-    margin-top: 12px;
-}
-
-.header-line {
-    width: 100px;
-    height: 2px;
-    background: linear-gradient(to right, transparent, #c69a42, transparent);
-    margin: 24px auto;
-}
-
-.content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 25px;
-}
-
-.message {
-    padding: 25px;
-}
-
-.eyebrow {
-    color: #648bb2;
+.ascii-title {
+    font-family: monospace;
+    font-size: 11px;
     letter-spacing: 3px;
-    font-size: .75rem;
-    font-weight: bold;
+    color: #7fae9a;
+    margin-bottom: 20px;
 }
 
-.message h2 {
-    font: 600 clamp(2rem, 4vw, 3rem)/1.2 'Playfair Display', serif;
-    margin: 15px 0;
-    color: #1c456f;
-}
-
-.message > p {
-    color: #627c97;
-    line-height: 1.9;
-}
-
-.wish-card {
-    background: #ffffffa8;
-    border: 1px solid white;
-    border-left: 4px solid #78aeda;
-    border-radius: 16px;
-    padding: 22px;
-    margin-top: 25px;
-}
-
-.wish-card p {
-    font: 1.1rem/1.7 'Playfair Display', serif;
-    color: #47627d;
-}
-
-.signature {
-    color: #7896b3;
-    margin-top: 12px;
-    font-size: .8rem;
-}
-
-button {
-    margin-top: 24px;
-    padding: 13px 22px;
-    border: none;
-    border-radius: 30px;
-    background: linear-gradient(135deg, #6098c9, #315f91);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 8px 20px #315f9133;
-    transition: .2s;
-}
-
-button:hover {
-    transform: translateY(-3px);
-}
-
-/* 3D BOUQUET */
-
-.art-card {
-    min-height: 590px;
-    height: 590px;
-    position: relative;
+.terminal {
+    background: #020403;
+    border: 1px solid #233a31;
+    border-radius: 12px;
     overflow: hidden;
-    border-radius: 30px;
-    border: 1px solid white;
-    background: radial-gradient(circle, #edf6ff, #b9d3ec);
-    box-shadow: 0 25px 60px #315f9120;
+    width: min(100%, 700px);
+    margin: auto;
+    box-shadow: 0 0 35px #123d2830;
 }
 
-#bouquetCanvas {
-    width: 100%;
-    height: 100%;
+#asciiFlower {
     display: block;
-    cursor: grab;
-    touch-action: pan-y;
-}
-
-#bouquetCanvas:active {
-    cursor: grabbing;
-}
-
-.hint {
-    position: absolute;
-    bottom: 18px;
-    left: 0;
     width: 100%;
-    text-align: center;
-    color: #6485a6;
-    font-size: .75rem;
-    pointer-events: none;
+    height: auto;
 }
 
-footer {
-    text-align: center;
-    padding: 35px 10px 10px;
-    color: #7893ae;
-    font-size: .8rem;
-}
-
-.toast {
-    position: fixed;
-    bottom: 25px;
-    left: 50%;
-    transform: translate(-50%, 20px);
-    opacity: 0;
-    background: #234d75;
-    color: white;
-    padding: 15px 22px;
-    border-radius: 30px;
-    transition: .3s;
-    pointer-events: none;
-    text-align: center;
-    width: max-content;
-    max-width: 90%;
-    z-index: 10;
-}
-
-.toast.show {
-    opacity: 1;
-    transform: translate(-50%, 0);
-}
-
-@media(max-width: 760px) {
-    .content {
-        grid-template-columns: 1fr;
-    }
-
-    .message {
-        padding: 15px 8px;
-    }
-
-    .art-card {
-        height: 480px;
-        min-height: 480px;
-    }
+.ascii-caption {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 12px 22px;
+    background: #f4df32;
+    color: #202016;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 5px;
 }
 </style>
-</head>
-
-<body>
-
-<div class="page">
-
-    <header class="birthday-header">
-        <div class="header-decoration">✦</div>
-        <h1>Happy Birthday BaoBao!</h1>
-        <p>A special bouquet, made just for you 💙</p>
-        <div class="header-line"></div>
-    </header>
-
-    <main class="content">
-
-        <section class="message">
-
-            <div class="eyebrow">A BIRTHDAY SURPRISE · WITH LOVE</div>
-
-            <h2>Wishing you the happiest birthday.</h2>
-
-            <p>
-                Today is all about celebrating you.
-                I hope this new chapter brings you peaceful days,
-                exciting adventures, genuine laughter, and all
-                the little things that make you happy.
-            </p>
-
-            <div class="wish-card">
-                <p>
-                    "May your days be gentle, your dreams grow bigger,
-                    and your heart always find reasons to smile."
-                </p>
-
-                <div class="signature">
-                    — A little birthday wish for you 💙
-                </div>
-            </div>
-
-            <button onclick="showWish()">
-                Open your birthday wish ✨
-            </button>
-
-        </section>
-
-        <section class="art-card">
-            <div id="bouquetCanvas"></div>
-            <div class="hint">Drag to explore the bouquet ✨</div>
-        </section>
-
-    </main>
-
-    <footer>
-        Made with love, just for BaoBao 💙
-    </footer>
-
-</div>
-
-<div class="toast" id="toast">
-    Happy birthday, BaoBao! I hope today makes you feel extra special. 💙
-</div>
-
-<!-- THREE.JS -->
-
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
-  }
-}
-</script>
-
-<script type="module">
-
-import * as THREE from 'three';
-
-/* SCENE */
-
-const container = document.getElementById('bouquetCanvas');
-
-const scene = new THREE.Scene();
-scene.background = null;
-
-const camera = new THREE.PerspectiveCamera(
-    38,
-    container.clientWidth / container.clientHeight,
-    0.1,
-    100
-);
-
-camera.position.set(0, 1.1, 8.5);
-camera.lookAt(0, 0.7, 0);
-
-const renderer = new THREE.WebGLRenderer({
-    alpha: true,
-    antialias: true
-});
-
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setSize(container.clientWidth, container.clientHeight);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-container.appendChild(renderer.domElement);
-
-/* LIGHTING */
-
-scene.add(new THREE.AmbientLight(0xffffff, 2));
-
-const mainLight = new THREE.DirectionalLight(0xffffff, 3);
-mainLight.position.set(-3, 6, 6);
-scene.add(mainLight);
-
-const blueLight = new THREE.PointLight(0x75aaff, 35);
-blueLight.position.set(3, 2, 4);
-scene.add(blueLight);
-
-const goldLight = new THREE.PointLight(0xffd58b, 15);
-goldLight.position.set(-3, 2, -3);
-scene.add(goldLight);
-
-/* MATERIALS */
-
-const navy = new THREE.MeshStandardMaterial({
-    color: 0x102e59,
-    roughness: 0.38,
-    metalness: 0.12
-});
-
-const blue = new THREE.MeshStandardMaterial({
-    color: 0x245b96,
-    roughness: 0.32,
-    metalness: 0.12
-});
-
-const lightBlue = new THREE.MeshStandardMaterial({
-    color: 0x527eae,
-    roughness: 0.38
-});
-
-const green = new THREE.MeshStandardMaterial({
-    color: 0x416b4e,
-    roughness: 0.8
-});
-
-const white = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-    roughness: 0.65
-});
-
-const gold = new THREE.MeshStandardMaterial({
-    color: 0xd4ad60,
-    metalness: 0.8,
-    roughness: 0.25
-});
-
-const crystal = new THREE.MeshPhysicalMaterial({
-    color: 0xd9efff,
-    metalness: 0.2,
-    roughness: 0.08,
-    clearcoat: 1
-});
-
-const wrapperMaterial = new THREE.MeshStandardMaterial({
-    color: 0x101a2b,
-    roughness: 0.35,
-    side: THREE.DoubleSide
-});
-
-/* BOUQUET GROUP */
-
-const bouquet = new THREE.Group();
-scene.add(bouquet);
-
-/* STEM CREATOR */
-
-function makeStem(start, end) {
-    const direction = new THREE.Vector3().subVectors(end, start);
-    const length = direction.length();
-
-    const mesh = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.018, 0.026, length, 8),
-        green
-    );
-
-    mesh.position.copy(start).add(end).multiplyScalar(0.5);
-    mesh.quaternion.setFromUnitVectors(
-        new THREE.Vector3(0, 1, 0),
-        direction.normalize()
-    );
-
-    bouquet.add(mesh);
-}
-
-/* LEAVES */
-
-function makeLeaf(position, angle) {
-    const leaf = new THREE.Mesh(
-        new THREE.SphereGeometry(1, 16, 12),
-        green
-    );
-
-    leaf.scale.set(0.25, 0.09, 0.5);
-    leaf.position.copy(position);
-    leaf.rotation.z = angle;
-    leaf.rotation.x = 0.4;
-
-    bouquet.add(leaf);
-}
-
-/* ROSE CREATOR */
-
-function makeRose(x, y, z, size, back = false) {
-
-    const rose = new THREE.Group();
-
-    rose.position.set(x, y, z);
-
-    if (back) {
-        rose.rotation.y = Math.PI;
-    }
-
-    bouquet.add(rose);
-
-    const sphere = new THREE.SphereGeometry(1, 20, 16);
-
-    // Outer petals
-    for (let layer = 0; layer < 2; layer++) {
-
-        const count = 10;
-        const radius = layer === 0 ? 0.19 : 0.115;
-
-        for (let i = 0; i < count; i++) {
-
-            const angle = i * Math.PI * 2 / count
-                + layer * 0.3;
-
-            const petal = new THREE.Mesh(
-                sphere,
-                layer === 0 ? navy : blue
-            );
-
-            petal.scale.set(
-                size * 0.21,
-                size * 0.30,
-                size * 0.095
-            );
-
-            petal.position.set(
-                Math.cos(angle) * radius * size,
-                Math.sin(angle) * radius * size,
-                layer === 0 ? 0 : 0.07 * size
-            );
-
-            petal.rotation.z = angle - Math.PI / 2;
-
-            rose.add(petal);
-        }
-    }
-
-    // Inner curled petals
-    for (let i = 0; i < 6; i++) {
-
-        const angle = i * Math.PI / 3;
-
-        const petal = new THREE.Mesh(
-            sphere,
-            lightBlue
-        );
-
-        petal.scale.set(
-            size * 0.13,
-            size * 0.19,
-            size * 0.10
-        );
-
-        petal.position.set(
-            Math.cos(angle) * 0.09 * size,
-            Math.sin(angle) * 0.09 * size,
-            0.14 * size
-        );
-
-        petal.rotation.z = angle;
-
-        rose.add(petal);
-    }
-
-    // Rose center
-    const center = new THREE.Mesh(
-        new THREE.SphereGeometry(size * 0.105, 20, 20),
-        crystal
-    );
-
-    center.position.z = size * 0.22;
-    rose.add(center);
-
-    // Crystal highlight
-    const highlight = new THREE.Mesh(
-        new THREE.SphereGeometry(size * 0.035, 12, 12),
-        white
-    );
-
-    highlight.position.set(
-        -size * 0.035,
-        size * 0.045,
-        size * 0.30
-    );
-
-    rose.add(highlight);
-
-    return rose;
-}
-
-/* 3D FLOWER ARRANGEMENT */
-
-const flowers = [
-    [-1.05, 1.05, 0.45, 0.85],
-    [-0.55, 1.65, 0.35, 0.90],
-    [0.15, 1.85, 0.35, 0.90],
-    [0.85, 1.55, 0.40, 0.90],
-    [1.15, 0.90, 0.35, 0.85],
-
-    [-1.30, 0.35, 0.35, 0.90],
-    [-0.65, 0.65, 0.55, 1.0],
-    [0.05, 0.75, 0.65, 1.05],
-    [0.75, 0.65, 0.50, 1.0],
-    [1.35, 0.25, 0.30, 0.85],
-
-    [-0.95, -0.20, 0.40, 0.90],
-    [-0.25, -0.10, 0.65, 1.0],
-    [0.55, -0.15, 0.55, 1.0],
-    [1.10, -0.30, 0.30, 0.85],
-
-    [-0.55, 1.00, -0.40, 0.85],
-    [0.30, 1.40, -0.50, 0.90],
-    [0.95, 0.65, -0.45, 0.90],
-    [-1.00, 0.15, -0.45, 0.90],
-
-    [-0.50, -0.10, -0.40, 0.95],
-    [0.50, -0.15, -0.40, 0.95],
-    [0.00, 0.65, -0.65, 0.95]
-];
-
-flowers.forEach((f, i) => {
-    const [x, y, z, size] = f;
-
-    makeRose(x, y, z, size, z < 0);
-
-    makeStem(
-        new THREE.Vector3(x, y - 0.1, z),
-        new THREE.Vector3(x * 0.3, -1.3, 0)
-    );
-
-    if (i % 2 === 0) {
-        makeLeaf(
-            new THREE.Vector3(x * 0.8, -0.75, z + 0.1),
-            i * 0.6
-        );
-    }
-});
-
-/* BABY'S BREATH */
-
-function makeBabyBreath(x, y, z) {
-
-    const sprig = new THREE.Group();
-    sprig.position.set(x, y, z);
-
-    bouquet.add(sprig);
-
-    const stemMaterial = green;
-
-    function branch(end) {
-
-        const start = new THREE.Vector3(0, 0, 0);
-        const direction = new THREE.Vector3(...end);
-        const length = direction.length();
-
-        const stem = new THREE.Mesh(
-            new THREE.CylinderGeometry(0.008, 0.012, length, 5),
-            stemMaterial
-        );
-
-        stem.position.copy(direction).multiplyScalar(0.5);
-
-        stem.quaternion.setFromUnitVectors(
-            new THREE.Vector3(0, 1, 0),
-            direction.normalize()
-        );
-
-        sprig.add(stem);
-
-        const flower = new THREE.Mesh(
-            new THREE.SphereGeometry(0.045, 10, 10),
-            white
-        );
-
-        flower.position.set(...end);
-        sprig.add(flower);
-    }
-
-    branch([-0.20, 0.25, 0.02]);
-    branch([0.20, 0.38, 0.03]);
-    branch([-0.30, 0.45, 0]);
-    branch([0.30, 0.20, -0.02]);
-    branch([0, 0.55, 0.02]);
-
-}
-
-[
-    [-1.35, 1.1, 0.65],
-    [-0.8, 1.95, 0.4],
-    [0.8, 1.95, 0.5],
-    [1.4, 1.0, 0.55],
-    [-1.45, 0.0, 0.5],
-    [1.35, 0.0, 0.5],
-    [-0.5, -0.15, 0.6],
-    [0.5, -0.2, 0.6],
-    [0.2, 1.5, -0.7]
-].forEach(p => makeBabyBreath(...p));
-
-/* 3D WRAPPER */
-
-const wrapper = new THREE.Mesh(
-    new THREE.CylinderGeometry(1.55, 0.55, 1.65, 64, 1, true),
-    wrapperMaterial
-);
-
-wrapper.position.y = -0.85;
-bouquet.add(wrapper);
-
-// Gold rim
-const rim = new THREE.Mesh(
-    new THREE.TorusGeometry(1.55, 0.035, 12, 64),
-    gold
-);
-
-rim.position.y = -0.025;
-bouquet.add(rim);
-
-// Gold decorative bands
-for (let i = 0; i < 3; i++) {
-
-    const band = new THREE.Mesh(
-        new THREE.TorusGeometry(
-            1.55 - i * 0.12,
-            0.018,
-            8,
-            64
-        ),
-        gold
-    );
-
-    band.position.y = -0.25 - i * 0.3;
-    bouquet.add(band);
-}
-
-/* BLUE RIBBON */
-
-const ribbon = new THREE.Group();
-ribbon.position.set(0, -1.3, 0.75);
-bouquet.add(ribbon);
-
-const bowMaterial = new THREE.MeshStandardMaterial({
-    color: 0x245b96,
-    roughness: 0.25,
-    metalness: 0.2,
-    side: THREE.DoubleSide
-});
-
-const leftBow = new THREE.Mesh(
-    new THREE.TorusGeometry(0.30, 0.09, 12, 32, Math.PI * 1.7),
-    bowMaterial
-);
-
-leftBow.position.x = -0.25;
-leftBow.rotation.z = 0.4;
-ribbon.add(leftBow);
-
-const rightBow = leftBow.clone();
-rightBow.position.x = 0.25;
-rightBow.rotation.z = -0.4;
-ribbon.add(rightBow);
-
-const knot = new THREE.Mesh(
-    new THREE.SphereGeometry(0.13, 20, 20),
-    gold
-);
-
-ribbon.add(knot);
-
-/* GOLD BUTTERFLIES */
-
-function makeButterfly(x, y, z, scale) {
-
-    const butterfly = new THREE.Group();
-
-    butterfly.position.set(x, y, z);
-    butterfly.scale.setScalar(scale);
-
-    bouquet.add(butterfly);
-
-    const wingGeometry = new THREE.SphereGeometry(1, 20, 16);
-
-    const wing1 = new THREE.Mesh(wingGeometry, gold);
-    wing1.scale.set(0.19, 0.31, 0.045);
-    wing1.position.set(-0.15, 0.10, 0);
-    wing1.rotation.z = -0.4;
-    butterfly.add(wing1);
-
-    const wing2 = wing1.clone();
-    wing2.position.x = 0.15;
-    wing2.rotation.z = 0.4;
-    butterfly.add(wing2);
-
-    const lower1 = wing1.clone();
-    lower1.scale.set(0.12, 0.20, 0.04);
-    lower1.position.set(-0.11, -0.15, 0.02);
-    butterfly.add(lower1);
-
-    const lower2 = lower1.clone();
-    lower2.position.x = 0.11;
-    butterfly.add(lower2);
-
-    const body = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.025, 0.025, 0.36, 8),
-        gold
-    );
-
-    butterfly.add(body);
-
-}
-
-makeButterfly(-0.75, 1.65, 0.85, 1.0);
-makeButterfly(0.85, 0.15, 0.9, 1.2);
-makeButterfly(0.9, 1.8, -0.6, 0.8);
-
-/* FLOOR SHADOW */
-
-const ground = new THREE.Mesh(
-    new THREE.CircleGeometry(2.0, 48),
-    new THREE.MeshBasicMaterial({
-        color: 0x7398bc,
-        transparent: true,
-        opacity: 0.13
-    })
-);
-
-ground.rotation.x = -Math.PI / 2;
-ground.position.y = -1.72;
-ground.position.z = -0.1;
-bouquet.add(ground);
-
-/* MOUSE AND TOUCH ROTATION */
-
-let dragging = false;
-let previousX = 0;
-let rotationSpeed = 0.006;
-
-container.addEventListener('pointerdown', e => {
-    dragging = true;
-    previousX = e.clientX;
-    container.setPointerCapture(e.pointerId);
-});
-
-container.addEventListener('pointermove', e => {
-    if (!dragging) return;
-
-    const difference = e.clientX - previousX;
-
-    bouquet.rotation.y += difference * 0.009;
-    previousX = e.clientX;
-});
-
-container.addEventListener('pointerup', () => {
-    dragging = false;
-});
-
-container.addEventListener('pointercancel', () => {
-    dragging = false;
-});
-
-/* RESIZE */
-
-function resize() {
-
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize(width, height);
-}
-
-window.addEventListener('resize', resize);
-
-/* ANIMATION */
-
-function animate() {
-
-    requestAnimationFrame(animate);
-
-    if (!dragging) {
-        bouquet.rotation.y += rotationSpeed;
-    }
-
-    renderer.render(scene, camera);
-}
-
-animate();
-
-</script>
 
 <script>
-function showWish() {
+(() => {
+    const canvas = document.getElementById("asciiFlower");
+    const ctx = canvas.getContext("2d");
 
-    const toast = document.getElementById('toast');
+    const W = 100;
+    const H = 52;
 
-    toast.classList.add('show');
+    canvas.width = W * 9;
+    canvas.height = H * 13;
 
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 4000);
-}
+    const chars = "01{}[]<>/\\|:;*+abcdefghijklmnopqrstuvwxyz";
+    const redChars = "0189@#$%&";
+    const greenChars = "01{}[]/\\|+*";
+
+    let frame = 0;
+
+    // Flower head positions
+    const roses = [
+        [25, 16, 10, 7],
+        [38, 12, 11, 8],
+        [52, 13, 11, 8],
+        [67, 17, 10, 7],
+        [44, 22, 12, 7],
+        [59, 24, 10, 7],
+        [30, 25, 9, 6]
+    ];
+
+    function ellipse(x, y, cx, cy, rx, ry) {
+        return ((x-cx)/rx)**2 + ((y-cy)/ry)**2 <= 1;
+    }
+
+    function random(x, y) {
+        const n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+        return n - Math.floor(n);
+    }
+
+    function draw() {
+        frame++;
+
+        ctx.fillStyle = "#020403";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = "10px monospace";
+        ctx.textBaseline = "top";
+
+        for (let y = 0; y < H; y++) {
+            for (let x = 0; x < W; x++) {
+
+                const r = random(x, y);
+                const flicker = Math.sin(frame * .06 + x + y) * .5 + .5;
+
+                let color = null;
+                let character = chars[Math.floor(r * chars.length)];
+
+                // STARS
+                if (r > .985) {
+                    color = `rgba(220,245,255,${.3 + flicker*.7})`;
+                    character = r > .994 ? "✦" : ".";
+                }
+
+                // ROSE PETALS
+                for (let i = 0; i < roses.length; i++) {
+                    const [cx, cy, rx, ry] = roses[i];
+
+                    if (ellipse(x,y,cx,cy,rx,ry)) {
+                        color = r > .65 ? "#ff426d" :
+                                r > .3 ? "#a91745" : "#65132e";
+
+                        character = redChars[
+                            Math.floor(r * redChars.length)
+                        ];
+                    }
+
+                    // Inner flower details
+                    if (ellipse(x,y,cx,cy,rx*.43,ry*.43)) {
+                        color = "#ff7792";
+                        character = "{}*"[Math.floor(r*3)];
+                    }
+                }
+
+                // STEMS
+                const stemX = 48 + Math.sin(y*.25)*3;
+
+                if (y > 27 && y < 47 && Math.abs(x-stemX) < 2) {
+                    color = "#39d96c";
+                    character = greenChars[
+                        Math.floor(r*greenChars.length)
+                    ];
+                }
+
+                // LEAVES
+                const leaves = [
+                    [35,32,12,4],
+                    [61,34,13,4],
+                    [39,39,10,3],
+                    [57,41,11,3],
+                    [25,36,8,3],
+                    [70,38,8,3]
+                ];
+
+                for (const [cx,cy,rx,ry] of leaves) {
+                    if (ellipse(x,y,cx,cy,rx,ry)) {
+                        color = r > .5 ? "#43ed70" : "#168b49";
+                        character = greenChars[
+                            Math.floor(r*greenChars.length)
+                        ];
+                    }
+                }
+
+                // FLOWER STEM BOTTOM
+                if (y >= 45 && y <= 50 && x >= 45 && x <= 51) {
+                    color = "#28ba60";
+                    character = greenChars[
+                        Math.floor(r*greenChars.length)
+                    ];
+                }
+
+                if (color) {
+                    ctx.fillStyle = color;
+                    ctx.fillText(
+                        character,
+                        x*9,
+                        y*13
+                    );
+                }
+            }
+        }
+
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+})();
 </script>
-
-</body>
-</html>
