@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
   <title>Happy Birthday BaoBao!</title>
   <style>
     :root {
@@ -67,11 +67,13 @@
       z-index: 2;
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 14px 14px;
+      padding: max(10px, env(safe-area-inset-top)) 12px max(10px, env(safe-area-inset-bottom));
     }
 
     /* Hero Header */
@@ -92,14 +94,41 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 26px rgba(242, 201, 107, 0.35);
-      animation: shimmerText 5s linear infinite;
+      text-shadow:
+        0 0 10px rgba(255, 244, 194, 0.55),
+        0 0 24px rgba(242, 201, 107, 0.48),
+        0 0 48px rgba(125, 211, 252, 0.22);
+      animation: shimmerText 5s linear infinite, titleGlow 3.8s ease-in-out infinite;
+      position: relative;
+      padding: 0.12em 0.28em;
+      line-height: 1.18;
     }
 
     @keyframes shimmerText {
-      to {
-        background-position: 220% center;
+      to { background-position: 220% center; }
+    }
+
+    @keyframes titleGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 3px rgba(255, 231, 163, 0.2));
+        transform: translateY(0);
       }
+      50% {
+        filter: drop-shadow(0 0 13px rgba(255, 226, 145, 0.55));
+        transform: translateY(-2px);
+      }
+    }
+
+    header.hero-header h1::after {
+      content: "✦  ✧  ✦";
+      display: block;
+      margin-top: 0.28rem;
+      font-family: Georgia, serif;
+      font-size: 0.42em;
+      letter-spacing: 0.65em;
+      padding-left: 0.65em;
+      color: rgba(255, 231, 163, 0.82);
+      text-shadow: 0 0 12px rgba(242, 201, 107, 0.7);
     }
 
     /* ASCII Viewport */
@@ -121,13 +150,14 @@
 
     pre#ascii-canvas {
       font-family: 'Cascadia Mono', 'Fira Code', 'JetBrains Mono', Consolas, 'Courier New', monospace;
-      font-size: clamp(2.65px, 0.56vh, 4.35px);
+      font-size: clamp(2.1px, min(0.56vh, 0.56vw), 4.35px);
       line-height: 0.92;
       letter-spacing: 0.04em;
       white-space: pre;
       text-align: center;
       transform-origin: center center;
-      transition: transform 0.25s ease;
+      transition: transform 0.12s ease-out;
+      will-change: contents;
       filter: drop-shadow(0 12px 32px rgba(3, 8, 20, 0.85));
     }
 
@@ -144,7 +174,8 @@
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--panel-border);
       border-radius: 999px;
-      padding: 6px 14px;
+      padding: 7px 12px;
+      max-width: min(100%, 760px);
       box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
     }
 
@@ -153,8 +184,9 @@
       color: #f1f5f9;
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 999px;
-      padding: 5px 11px;
-      font-size: 0.74rem;
+      padding: 7px 12px;
+      min-height: 34px;
+      font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -199,13 +231,79 @@
       overflow: hidden;
     }
 
+    .zoom-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #e2e8f0;
+      font-size: 0.72rem;
+      padding: 0 4px;
+    }
+
+    #zoom-slider {
+      width: 104px;
+      accent-color: #f2c96b;
+      cursor: pointer;
+      touch-action: pan-x;
+    }
+
     @media (max-width: 640px) {
+      .app-shell {
+        padding: max(8px, env(safe-area-inset-top)) 8px max(9px, env(safe-area-inset-bottom));
+        gap: 6px;
+      }
+      header.hero-header {
+        flex: 0 0 auto;
+        padding-top: 3px;
+      }
+      header.hero-header h1 {
+        font-size: clamp(1.05rem, 5.4vw, 1.65rem);
+        letter-spacing: 0.035em;
+      }
+      .stage-wrap {
+        min-height: 0;
+        flex: 1 1 auto;
+        width: 100%;
+      }
       pre#ascii-canvas {
-        font-size: clamp(2.15px, 0.68vw, 3.2px);
+        font-size: clamp(1.65px, 0.62vw, 3px);
+        line-height: 0.9;
+        letter-spacing: 0;
       }
-      .hint-tag {
-        display: none;
+      .controls-bar {
+        flex: 0 0 auto;
+        width: 100%;
+        border-radius: 18px;
+        gap: 6px;
+        padding: 8px;
+        margin-bottom: 2px;
       }
+      .btn {
+        min-height: 38px;
+        padding: 8px 10px;
+        font-size: 0.74rem;
+      }
+      .divider { display: none; }
+      .hint-tag { display: none; }
+      .zoom-control {
+        min-height: 38px;
+        padding: 0 5px;
+      }
+      #zoom-slider { width: clamp(76px, 25vw, 112px); }
+    }
+
+    @media (max-width: 380px) {
+      .controls-bar { gap: 5px; padding: 7px 5px; }
+      .btn { padding: 7px 8px; font-size: 0.69rem; }
+      #zoom-slider { width: 72px; }
+      header.hero-header h1 { font-size: 1.02rem; }
+    }
+
+    @media (max-height: 620px) {
+      .app-shell { gap: 4px; }
+      header.hero-header h1 { font-size: clamp(1rem, 4vh, 1.7rem); }
+      .controls-bar { padding-top: 5px; padding-bottom: 5px; }
+      .btn { min-height: 32px; padding-top: 5px; padding-bottom: 5px; }
     }
   </style>
 </head>
@@ -224,7 +322,11 @@
     <div class="controls-bar">
       <button class="btn" id="toggle-spin">⏸ Pause</button>
       <button class="btn" id="speed-btn">Speed: 1x</button>
-      <button class="btn" id="zoom-btn">Zoom: 1x</button>
+      <button class="btn" id="zoom-btn" title="Reset zoom">Reset zoom</button>
+      <label class="zoom-control" for="zoom-slider">
+        <span>Zoom</span>
+        <input id="zoom-slider" type="range" min="0.65" max="1.65" step="0.01" value="1" aria-label="Manual bouquet zoom" />
+      </label>
       <div class="divider"></div>
       <button class="btn music-btn" id="music-toggle">🔊 Play Birthday Song</button>
       <span class="hint-tag">Drag sideways to spin · Up/down to view top</span>
@@ -896,6 +998,9 @@
     let isDragging = false;
     let lastClientX = 0;
     let lastClientY = 0;
+    let activePointers = new Map();
+    let pinchStartDistance = 0;
+    let pinchStartZoom = 1;
     let velocityY = 0;
     let velocityX = 0;
 
@@ -1013,16 +1118,47 @@
     // =========================================================
     // 5. INTERACTIVE CONTROLS & DRAG TO SPIN
     // =========================================================
+    function pointerDistance(a, b) {
+      return Math.hypot(a.x - b.x, a.y - b.y);
+    }
+
     stageEl.addEventListener('pointerdown', (e) => {
-      isDragging = true;
-      lastClientX = e.clientX;
-      lastClientY = e.clientY;
-      velocityY = 0;
-      velocityX = 0;
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (stageEl.setPointerCapture) stageEl.setPointerCapture(e.pointerId);
+
+      if (activePointers.size === 2) {
+        const pair = [...activePointers.values()];
+        pinchStartDistance = pointerDistance(pair[0], pair[1]);
+        pinchStartZoom = zoomMult;
+        isDragging = false;
+        return;
+      }
+
+      if (activePointers.size === 1) {
+        isDragging = true;
+        lastClientX = e.clientX;
+        lastClientY = e.clientY;
+        velocityY = 0;
+        velocityX = 0;
+      }
     });
 
     stageEl.addEventListener('pointermove', (e) => {
+      if (!activePointers.has(e.pointerId)) return;
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+      if (activePointers.size >= 2) {
+        const pair = [...activePointers.values()];
+        const distance = pointerDistance(pair[0], pair[1]);
+        if (pinchStartDistance > 0) {
+          zoomMult = Math.max(0.65, Math.min(1.65,
+            pinchStartZoom * (distance / pinchStartDistance)));
+          zoomSlider.value = zoomMult.toFixed(2);
+          updateZoomLabel();
+        }
+        return;
+      }
+
       if (!isDragging) return;
       const dx = e.clientX - lastClientX;
       const dy = e.clientY - lastClientY;
@@ -1034,12 +1170,19 @@
       angleX = Math.max(-Math.PI * 0.48, Math.min(Math.PI * 0.48, angleX + velocityX));
     });
 
-    stageEl.addEventListener('pointerup', () => {
-      isDragging = false;
-    });
-    stageEl.addEventListener('pointercancel', () => {
-      isDragging = false;
-    });
+    function releasePointer(e) {
+      activePointers.delete(e.pointerId);
+      if (activePointers.size < 2) pinchStartDistance = 0;
+      isDragging = activePointers.size === 1;
+      if (isDragging) {
+        const remaining = [...activePointers.values()][0];
+        lastClientX = remaining.x;
+        lastClientY = remaining.y;
+      }
+    }
+
+    stageEl.addEventListener('pointerup', releasePointer);
+    stageEl.addEventListener('pointercancel', releasePointer);
 
     const toggleSpinBtn = document.getElementById('toggle-spin');
     toggleSpinBtn.addEventListener('click', () => {
@@ -1057,12 +1200,29 @@
     });
 
     const zoomBtn = document.getElementById('zoom-btn');
-    zoomBtn.addEventListener('click', () => {
-      zoomMult = zoomMult === 1 ? 1.28 : 1;
-      zoomBtn.textContent = `Zoom: ${zoomMult === 1 ? '1x' : '1.3x'}`;
+    const zoomSlider = document.getElementById('zoom-slider');
+
+    function updateZoomLabel() {
+      zoomBtn.textContent = 'Reset zoom';
+      zoomBtn.title = `Current zoom: ${zoomMult.toFixed(2)}x`;
+    }
+
+    zoomSlider.addEventListener('input', () => {
+      zoomMult = Number(zoomSlider.value);
+      updateZoomLabel();
     });
 
+    zoomBtn.addEventListener('click', () => {
+      zoomMult = 1;
+      zoomSlider.value = '1';
+      updateZoomLabel();
+    });
+
+    // Prevent the page from scrolling while the bouquet is being manipulated.
+    stageEl.addEventListener('contextmenu', (e) => e.preventDefault());
+
     // Start loop
+    updateZoomLabel();
     animate();
   </script>
 </body>
