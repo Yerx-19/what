@@ -1,166 +1,654 @@
-<header class="birthday-header">
-    <div class="header-decoration">✦</div>
-    <h1>Happy Birthday BaoBao!</h1>
-    <p>A special bouquet, made just for you 💙</p>
-    <div class="header-line"></div>
-</header>
 
-<svg class="real-bouquet" viewBox="0 0 500 560"
-xmlns="http://www.w3.org/2000/svg">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday BaoBao! 💙</title>
 
-<defs>
-<radialGradient id="roseBlue">
-  <stop offset="0%" stop-color="#477bb5"/>
-  <stop offset="50%" stop-color="#163f78"/>
-  <stop offset="100%" stop-color="#061b3b"/>
-</radialGradient>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
-<linearGradient id="petal" x1="0" y1="0" x2="1" y2="1">
-  <stop stop-color="#6392c4"/>
-  <stop offset=".5" stop-color="#17477f"/>
-  <stop offset="1" stop-color="#061a39"/>
-</linearGradient>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-  <stop stop-color="#fff0b5"/>
-  <stop offset=".5" stop-color="#c69a42"/>
-  <stop offset="1" stop-color="#80551c"/>
-</linearGradient>
+body {
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    color: #183b63;
+    background:
+        radial-gradient(circle at 20% 10%, #ffffff, transparent 35%),
+        radial-gradient(circle at 85% 80%, #c3def8, transparent 40%),
+        linear-gradient(135deg, #f4f9ff, #d8eaff, #b8d4f0);
+    overflow-x: hidden;
+}
 
-<radialGradient id="crystal">
-  <stop stop-color="white"/>
-  <stop offset=".5" stop-color="#dff3ff"/>
-  <stop offset="1" stop-color="#8baacb"/>
-</radialGradient>
+/* BACKGROUND DETAILS */
 
-<g id="rose">
-  <circle r="38" fill="#071a36"/>
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .3;
+    background-image: radial-gradient(#6c9bc5 1px, transparent 1px);
+    background-size: 25px 25px;
+}
 
-  <g fill="url(#petal)" stroke="#7296bf" stroke-opacity=".3">
-    <ellipse cy="-17" rx="14" ry="23"/>
-    <ellipse cy="-17" rx="14" ry="23" transform="rotate(45)"/>
-    <ellipse cy="-17" rx="14" ry="23" transform="rotate(90)"/>
-    <ellipse cy="-17" rx="14" ry="23" transform="rotate(135)"/>
-    <ellipse cy="-17" rx="14" ry="23" transform="rotate(180)"/>
-    <ellipse cy="-17" rx="14" ry="23" transform="rotate(225)"/>
-    <ellipse cy="-17" rx="14" ry="23" transform="rotate(270)"/>
-    <ellipse cy="-17" rx="14" ry="23" transform="rotate(315)"/>
-  </g>
+/* MAIN CONTAINER */
 
-  <g fill="url(#roseBlue)">
-    <ellipse cy="-10" rx="11" ry="17"/>
-    <ellipse cy="-10" rx="11" ry="17" transform="rotate(90)"/>
-    <ellipse cy="-10" rx="11" ry="17" transform="rotate(180)"/>
-    <ellipse cy="-10" rx="11" ry="17" transform="rotate(270)"/>
-  </g>
+.page {
+    position: relative;
+    z-index: 1;
+    width: min(1100px, 100%);
+    margin: auto;
+    padding: 35px 25px;
+}
 
-  <path d="M-8 2 Q-15 -12 0 -18 Q17 -10 9 4 Q3 13 -5 10 Q-12 5 -3 -2"
-        fill="none" stroke="#8db3df" stroke-width="4"/>
+/* BIRTHDAY HEADER */
 
-  <circle r="9" fill="url(#crystal)"/>
-  <circle cx="-3" cy="-3" r="2.5" fill="white"/>
-</g>
+.birthday-header {
+    text-align: center;
+    padding: 25px 10px 35px;
+}
 
-<g id="baby">
-  <path d="M0 0 Q-10 -25 5 -48 M0 -5 Q15 -22 23 -35 M0 -14 Q-18 -27 -24 -38"
-        fill="none" stroke="#829d82" stroke-width="2"/>
-  <g fill="white">
-    <circle cx="5" cy="-48" r="5"/>
-    <circle cx="23" cy="-35" r="5"/>
-    <circle cx="-24" cy="-38" r="5"/>
-    <circle cx="-10" cy="-25" r="4"/>
-    <circle cx="12" cy="-23" r="4"/>
-    <circle cx="0" cy="-14" r="4"/>
-  </g>
-</g>
+.header-decoration {
+    font-size: 30px;
+    color: #c69a42;
+    margin-bottom: 12px;
+}
 
-<g id="butterfly">
-  <path d="M0 0 C-12 -34 -45 -48 -35 -12 C-28 7 -12 12 0 0
-  C12 -34 45 -48 35 -12 C28 7 12 12 0 0
-  C-15 10 -25 38 -8 34 L0 0
-  C15 10 25 38 8 34 Z"
-  fill="url(#gold)" stroke="#fff0bd" stroke-width="2"/>
-  <path d="M0 -5 L0 24 M0 -5 Q-10 -22 -16 -20 M0 -5 Q10 -22 16 -20"
-        stroke="#fff3c5" stroke-width="2" fill="none"/>
-</g>
-</defs>
+.birthday-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.7rem);
+    color: #173d69;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
 
-<!-- Stems -->
-<g stroke="#496f50" stroke-width="6" fill="none">
-  <path d="M245 280 Q230 390 250 495"/>
-  <path d="M210 270 Q195 390 245 490"/>
-  <path d="M280 260 Q300 390 260 490"/>
-  <path d="M180 290 Q205 410 245 490"/>
-  <path d="M320 285 Q285 400 260 490"/>
-</g>
+.birthday-header p {
+    color: #6485a6;
+    margin-top: 12px;
+    font-size: 1rem;
+}
 
-<!-- Greenery -->
-<g fill="#426d51" stroke="#8eae84">
-  <path d="M205 365 Q135 320 130 365 Q165 405 205 365"/>
-  <path d="M285 380 Q355 320 375 365 Q335 415 285 380"/>
-  <path d="M230 420 Q160 385 165 425 Q205 455 230 420"/>
-  <path d="M275 430 Q350 380 360 425 Q315 460 275 430"/>
-</g>
+.header-line {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        #c69a42,
+        transparent
+    );
+    margin: 25px auto 0;
+}
 
-<!-- Back row roses -->
-<use href="#rose" transform="translate(105 195) scale(.8)"/>
-<use href="#rose" transform="translate(165 150) scale(.85)"/>
-<use href="#rose" transform="translate(235 135) scale(.9)"/>
-<use href="#rose" transform="translate(305 150) scale(.85)"/>
-<use href="#rose" transform="translate(375 195) scale(.8)"/>
+/* CONTENT */
 
-<!-- Second row -->
-<use href="#rose" transform="translate(85 265) scale(.9)"/>
-<use href="#rose" transform="translate(155 235) scale(1)"/>
-<use href="#rose" transform="translate(235 215) scale(1)"/>
-<use href="#rose" transform="translate(315 235) scale(1)"/>
-<use href="#rose" transform="translate(395 265) scale(.9)"/>
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+}
 
-<!-- Third row -->
-<use href="#rose" transform="translate(105 340) scale(.9)"/>
-<use href="#rose" transform="translate(180 310) scale(1)"/>
-<use href="#rose" transform="translate(255 305) scale(1.05)"/>
-<use href="#rose" transform="translate(330 315) scale(1)"/>
-<use href="#rose" transform="translate(400 340) scale(.9)"/>
+/* MESSAGE */
 
-<!-- Front row -->
-<use href="#rose" transform="translate(145 400) scale(.8)"/>
-<use href="#rose" transform="translate(215 385) scale(.9)"/>
-<use href="#rose" transform="translate(285 390) scale(.9)"/>
-<use href="#rose" transform="translate(355 405) scale(.8)"/>
+.message {
+    padding: 25px;
+}
 
-<!-- Extra baby's breath -->
-<use href="#baby" transform="translate(70 220) scale(1.2)"/>
-<use href="#baby" transform="translate(135 110) scale(1.2)"/>
-<use href="#baby" transform="translate(205 95) scale(1.1)"/>
-<use href="#baby" transform="translate(330 105) scale(1.2)"/>
-<use href="#baby" transform="translate(425 215) scale(1.2)"/>
-<use href="#baby" transform="translate(65 320) scale(1)"/>
-<use href="#baby" transform="translate(435 320) scale(1)"/>
-<use href="#baby" transform="translate(170 435) scale(1.1)"/>
-<use href="#baby" transform="translate(330 435) scale(1.1)"/>
+.eyebrow {
+    color: #648bb2;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
 
-<!-- Gold butterflies -->
-<use href="#butterfly" transform="translate(195 175) scale(1.05) rotate(-18)"/>
-<use href="#butterfly" transform="translate(340 335) scale(1.2) rotate(15)"/>
+.message h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.2;
+    color: #1c456f;
+    margin: 15px 0;
+}
 
-<!-- Black and gold wrapping -->
-<path d="M250 470 L30 260 Q45 110 115 45 L225 165
-L250 15 L365 155 L450 65 Q500 170 470 300 Z"
-fill="#111c30" stroke="#c8a65d" stroke-width="6"/>
+.message > p {
+    color: #627c97;
+    line-height: 1.9;
+    font-size: .95rem;
+}
 
-<path d="M70 385 Q250 445 430 385 L390 520 Q250 550 110 520 Z"
-fill="#101b30" stroke="#d3b16b" stroke-width="5"/>
+.wish-card {
+    margin-top: 25px;
+    padding: 22px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.65);
+    border: 1px solid white;
+    border-left: 4px solid #78aeda;
+    box-shadow: 0 10px 30px #315f9112;
+}
 
-<!-- Satin bow -->
-<g transform="translate(250 470)">
-  <path d="M0 0 Q-80 -70 -100 -15 Q-80 40 0 8"
-        fill="#174b83" stroke="#8eb6dd" stroke-width="3"/>
-  <path d="M0 0 Q80 -70 100 -15 Q80 40 0 8"
-        fill="#245c96" stroke="#8eb6dd" stroke-width="3"/>
-  <path d="M-12 0 L-48 75 L-10 58 L0 5
-           L12 0 L48 75 L10 58 Z"
-        fill="#174b83" stroke="#8eb6dd" stroke-width="2"/>
-  <ellipse rx="17" ry="15" fill="url(#gold)"/>
-</g>
-</svg>
+.wish-card p {
+    font-family: 'Playfair Display', serif;
+    color: #47627d;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.signature {
+    margin-top: 12px;
+    font-size: .8rem;
+    color: #7896b3;
+}
+
+/* BUTTON */
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+button {
+    border: none;
+    padding: 13px 20px;
+    border-radius: 30px;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+}
+
+button:hover {
+    transform: translateY(-3px);
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #6098c9, #315f91);
+    color: white;
+    box-shadow: 0 8px 20px #315f9133;
+}
+
+/* BOUQUET DISPLAY */
+
+.art-card {
+    min-height: 590px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,.9);
+    background:
+        radial-gradient(circle at center, #edf6ff, #b9d3ec);
+    box-shadow: 0 25px 60px #315f9120;
+}
+
+.art-card::before {
+    content: "✧";
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    color: white;
+    font-size: 25px;
+}
+
+.art-card::after {
+    content: "✦";
+    position: absolute;
+    bottom: 35px;
+    right: 35px;
+    color: white;
+    font-size: 25px;
+}
+
+/* BOUQUET SPIN */
+
+.real-bouquet {
+    display: block;
+    width: min(100%, 470px);
+    height: auto;
+    transform-origin: center center;
+    animation: bouquetSpin 35s linear infinite;
+    filter: drop-shadow(0 18px 20px rgba(10,35,65,.25));
+}
+
+@keyframes bouquetSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 35px 10px 10px;
+    color: #7893ae;
+    font-size: .8rem;
+}
+
+/* MESSAGE POPUP */
+
+.toast {
+    position: fixed;
+    z-index: 10;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%, 20px);
+    opacity: 0;
+    pointer-events: none;
+    background: #234d75;
+    color: white;
+    padding: 15px 22px;
+    border-radius: 30px;
+    text-align: center;
+    width: max-content;
+    max-width: 90%;
+    box-shadow: 0 8px 25px #183b6340;
+    transition: .3s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* MOBILE */
+
+@media(max-width: 760px) {
+    .page {
+        padding: 20px 15px;
+    }
+
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+
+    .message {
+        padding: 15px 8px;
+    }
+
+    .art-card {
+        min-height: 470px;
+    }
+
+    .real-bouquet {
+        width: min(100%, 390px);
+    }
+}
+
+@media(max-width: 400px) {
+    .art-card {
+        min-height: 400px;
+    }
+
+    .real-bouquet {
+        width: 340px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- BIRTHDAY HEADER -->
+
+    <header class="birthday-header">
+        <div class="header-decoration">✦</div>
+
+        <h1>Happy Birthday BaoBao!</h1>
+
+        <p>A special bouquet, made just for you 💙</p>
+
+        <div class="header-line"></div>
+    </header>
+
+    <main class="main-content">
+
+        <!-- BIRTHDAY MESSAGE -->
+
+        <section class="message">
+
+            <div class="eyebrow">
+                A birthday surprise · with love
+            </div>
+
+            <h2>Wishing you the happiest birthday.</h2>
+
+            <p>
+                Today is all about celebrating you.
+                I hope this new chapter brings you peaceful days,
+                exciting adventures, genuine laughter, and all
+                the little things that make you happy.
+            </p>
+
+            <div class="wish-card">
+                <p>
+                    "May your days be gentle, your dreams grow bigger,
+                    and your heart always find reasons to smile."
+                </p>
+
+                <div class="signature">
+                    — A little birthday wish for you 💙
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button class="primary-btn" onclick="showWish()">
+                    Open your birthday wish ✨
+                </button>
+            </div>
+
+        </section>
+
+        <!-- BOUQUET -->
+
+        <section class="art-card">
+
+            <svg class="real-bouquet"
+            viewBox="0 0 500 560"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+
+            <defs>
+
+                <!-- ROSE COLORS -->
+
+                <radialGradient id="roseBlue">
+                    <stop offset="0%" stop-color="#477bb5"/>
+                    <stop offset="50%" stop-color="#163f78"/>
+                    <stop offset="100%" stop-color="#061b3b"/>
+                </radialGradient>
+
+                <linearGradient id="petal" x1="0" y1="0" x2="1" y2="1">
+                    <stop stop-color="#6392c4"/>
+                    <stop offset=".5" stop-color="#17477f"/>
+                    <stop offset="1" stop-color="#061a39"/>
+                </linearGradient>
+
+                <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+                    <stop stop-color="#fff0b5"/>
+                    <stop offset=".5" stop-color="#c69a42"/>
+                    <stop offset="1" stop-color="#80551c"/>
+                </linearGradient>
+
+                <radialGradient id="crystal">
+                    <stop stop-color="white"/>
+                    <stop offset=".5" stop-color="#dff3ff"/>
+                    <stop offset="1" stop-color="#8baacb"/>
+                </radialGradient>
+
+                <!-- ROSE TEMPLATE -->
+
+                <g id="rose">
+
+                    <circle r="38" fill="#071a36"/>
+
+                    <g fill="url(#petal)"
+                    stroke="#7296bf"
+                    stroke-opacity=".3">
+
+                        <ellipse cy="-17" rx="14" ry="23"/>
+                        <ellipse cy="-17" rx="14" ry="23" transform="rotate(45)"/>
+                        <ellipse cy="-17" rx="14" ry="23" transform="rotate(90)"/>
+                        <ellipse cy="-17" rx="14" ry="23" transform="rotate(135)"/>
+                        <ellipse cy="-17" rx="14" ry="23" transform="rotate(180)"/>
+                        <ellipse cy="-17" rx="14" ry="23" transform="rotate(225)"/>
+                        <ellipse cy="-17" rx="14" ry="23" transform="rotate(270)"/>
+                        <ellipse cy="-17" rx="14" ry="23" transform="rotate(315)"/>
+
+                    </g>
+
+                    <g fill="url(#roseBlue)">
+                        <ellipse cy="-10" rx="11" ry="17"/>
+                        <ellipse cy="-10" rx="11" ry="17" transform="rotate(90)"/>
+                        <ellipse cy="-10" rx="11" ry="17" transform="rotate(180)"/>
+                        <ellipse cy="-10" rx="11" ry="17" transform="rotate(270)"/>
+                    </g>
+
+                    <path d="M-8 2 Q-15 -12 0 -18 Q17 -10 9 4 Q3 13 -5 10 Q-12 5 -3 -2"
+                    fill="none"
+                    stroke="#8db3df"
+                    stroke-width="4"/>
+
+                    <circle r="9" fill="url(#crystal)"/>
+                    <circle cx="-3" cy="-3" r="2.5" fill="white"/>
+
+                </g>
+
+                <!-- BABY'S BREATH -->
+
+                <g id="baby">
+
+                    <path d="M0 0 Q-10 -25 5 -48
+                    M0 -5 Q15 -22 23 -35
+                    M0 -14 Q-18 -27 -24 -38"
+                    fill="none"
+                    stroke="#829d82"
+                    stroke-width="2"/>
+
+                    <g fill="white">
+                        <circle cx="5" cy="-48" r="5"/>
+                        <circle cx="23" cy="-35" r="5"/>
+                        <circle cx="-24" cy="-38" r="5"/>
+                        <circle cx="-10" cy="-25" r="4"/>
+                        <circle cx="12" cy="-23" r="4"/>
+                        <circle cx="0" cy="-14" r="4"/>
+                    </g>
+
+                </g>
+
+                <!-- BUTTERFLY -->
+
+                <g id="butterfly">
+
+                    <path d="
+                    M0 0
+                    C-12 -34 -45 -48 -35 -12
+                    C-28 7 -12 12 0 0
+                    C12 -34 45 -48 35 -12
+                    C28 7 12 12 0 0
+                    C-15 10 -25 38 -8 34 L0 0
+                    C15 10 25 38 8 34 Z"
+                    fill="url(#gold)"
+                    stroke="#fff0bd"
+                    stroke-width="2"/>
+
+                    <path d="M0 -5 L0 24
+                    M0 -5 Q-10 -22 -16 -20
+                    M0 -5 Q10 -22 16 -20"
+                    stroke="#fff3c5"
+                    stroke-width="2"
+                    fill="none"/>
+
+                </g>
+
+            </defs>
+
+            <!-- WRAPPING PAPER BACKGROUND -->
+
+            <path d="
+            M250 470
+            L30 260
+            Q45 110 115 45
+            L225 165
+            L250 15
+            L365 155
+            L450 65
+            Q500 170 470 300 Z"
+            fill="#111c30"
+            stroke="#c8a65d"
+            stroke-width="6"/>
+
+            <path d="
+            M250 465
+            L15 300
+            Q-5 260 12 235
+            L135 280
+            L250 30
+            L365 280
+            L490 230
+            Q510 270 480 315 Z"
+            fill="#0b1930"
+            stroke="#d3b16b"
+            stroke-width="5"/>
+
+            <!-- STEMS -->
+
+            <g stroke="#496f50" stroke-width="6" fill="none">
+
+                <path d="M245 280 Q230 390 250 495"/>
+                <path d="M210 270 Q195 390 245 490"/>
+                <path d="M280 260 Q300 390 260 490"/>
+                <path d="M180 290 Q205 410 245 490"/>
+                <path d="M320 285 Q285 400 260 490"/>
+
+            </g>
+
+            <!-- LEAVES -->
+
+            <g fill="#426d51" stroke="#8eae84">
+
+                <path d="M205 365 Q135 320 130 365 Q165 405 205 365"/>
+                <path d="M285 380 Q355 320 375 365 Q335 415 285 380"/>
+                <path d="M230 420 Q160 385 165 425 Q205 455 230 420"/>
+                <path d="M275 430 Q350 380 360 425 Q315 460 275 430"/>
+
+            </g>
+
+            <!-- BACK ROW -->
+
+            <use xlink:href="#rose" transform="translate(105 195) scale(.8)"/>
+            <use xlink:href="#rose" transform="translate(165 150) scale(.85)"/>
+            <use xlink:href="#rose" transform="translate(235 135) scale(.9)"/>
+            <use xlink:href="#rose" transform="translate(305 150) scale(.85)"/>
+            <use xlink:href="#rose" transform="translate(375 195) scale(.8)"/>
+
+            <!-- SECOND ROW -->
+
+            <use xlink:href="#rose" transform="translate(85 265) scale(.9)"/>
+            <use xlink:href="#rose" transform="translate(155 235) scale(1)"/>
+            <use xlink:href="#rose" transform="translate(235 215) scale(1)"/>
+            <use xlink:href="#rose" transform="translate(315 235) scale(1)"/>
+            <use xlink:href="#rose" transform="translate(395 265) scale(.9)"/>
+
+            <!-- THIRD ROW -->
+
+            <use xlink:href="#rose" transform="translate(105 340) scale(.9)"/>
+            <use xlink:href="#rose" transform="translate(180 310) scale(1)"/>
+            <use xlink:href="#rose" transform="translate(255 305) scale(1.05)"/>
+            <use xlink:href="#rose" transform="translate(330 315) scale(1)"/>
+            <use xlink:href="#rose" transform="translate(400 340) scale(.9)"/>
+
+            <!-- FRONT ROW -->
+
+            <use xlink:href="#rose" transform="translate(145 400) scale(.8)"/>
+            <use xlink:href="#rose" transform="translate(215 385) scale(.9)"/>
+            <use xlink:href="#rose" transform="translate(285 390) scale(.9)"/>
+            <use xlink:href="#rose" transform="translate(355 405) scale(.8)"/>
+
+            <!-- BABY'S BREATH -->
+
+            <use xlink:href="#baby" transform="translate(70 220) scale(1.2)"/>
+            <use xlink:href="#baby" transform="translate(135 110) scale(1.2)"/>
+            <use xlink:href="#baby" transform="translate(205 95) scale(1.1)"/>
+            <use xlink:href="#baby" transform="translate(330 105) scale(1.2)"/>
+            <use xlink:href="#baby" transform="translate(425 215) scale(1.2)"/>
+            <use xlink:href="#baby" transform="translate(65 320) scale(1)"/>
+            <use xlink:href="#baby" transform="translate(435 320) scale(1)"/>
+            <use xlink:href="#baby" transform="translate(170 435) scale(1.1)"/>
+            <use xlink:href="#baby" transform="translate(330 435) scale(1.1)"/>
+
+            <!-- GOLD BUTTERFLIES -->
+
+            <use xlink:href="#butterfly"
+            transform="translate(195 175) scale(1.05) rotate(-18)"/>
+
+            <use xlink:href="#butterfly"
+            transform="translate(340 335) scale(1.2) rotate(15)"/>
+
+            <!-- FRONT WRAPPING FOLD -->
+
+            <path d="
+            M70 385
+            Q250 445 430 385
+            L390 520
+            Q250 550 110 520 Z"
+            fill="#101b30"
+            stroke="#d3b16b"
+            stroke-width="5"/>
+
+            <path d="M110 510 Q250 535 390 510"
+            fill="none"
+            stroke="#d8b86e"
+            stroke-width="3"/>
+
+            <!-- BLUE SATIN BOW -->
+
+            <g transform="translate(250 470)">
+
+                <path d="M0 0 Q-80 -70 -100 -15 Q-80 40 0 8"
+                fill="#174b83"
+                stroke="#8eb6dd"
+                stroke-width="3"/>
+
+                <path d="M0 0 Q80 -70 100 -15 Q80 40 0 8"
+                fill="#245c96"
+                stroke="#8eb6dd"
+                stroke-width="3"/>
+
+                <path d="M-12 0 L-48 75 L-10 58 L0 5
+                L12 0 L48 75 L10 58 Z"
+                fill="#174b83"
+                stroke="#8eb6dd"
+                stroke-width="2"/>
+
+                <ellipse rx="17" ry="15" fill="url(#gold)"/>
+
+            </g>
+
+            </svg>
+
+        </section>
+
+    </main>
+
+    <footer>
+        Made with love, just for BaoBao 💙
+    </footer>
+
+</div>
+
+<!-- POPUP -->
+
+<div class="toast" id="toast">
+    Happy birthday, BaoBao! I hope today makes you feel extra special. 💙
+</div>
+
+<script>
+function showWish() {
+    const toast = document.getElementById("toast");
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 4000);
+}
+</script>
+
+</body>
+</html>
