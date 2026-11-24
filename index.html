@@ -1,891 +1,1011 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday BaoBao!</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,600;1,500&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        /* ==========================================================================
-           1. THEME & BASE STYLING (In-Text CSS for GitHub Pages)
-           ========================================================================== */
-        :root {
-            --bg-void: #05070e;
-            --bg-halo: #0c1429;
-            --gold-bright: #ffd700;
-            --gold-warm: #d4af37;
-            --gold-soft: #f3e5ab;
-            --royal-blue: #2563eb;
-            --text-light: #f8fafc;
-            --text-muted: #94a3b8;
-            --panel-bg: rgba(12, 18, 36, 0.78);
-            --panel-border: rgba(212, 175, 55, 0.35);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday BaoBao!</title>
+  <style>
+    :root {
+      --bg-top: #070d18;
+      --bg-mid: #0d182b;
+      --bg-bot: #060a13;
+      --gold-light: #fff3c4;
+      --gold-mid: #f2c96b;
+      --gold-deep: #b8872d;
+      --sky-soft: #bae6fd;
+      --panel-bg: rgba(11, 20, 38, 0.78);
+      --panel-border: rgba(242, 201, 107, 0.3);
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        body {
-            min-height: 100vh;
-            background: radial-gradient(circle at 50% 42%, var(--bg-halo) 0%, var(--bg-void) 75%);
-            color: var(--text-light);
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            overflow-x: hidden;
-            padding: 1rem 0.75rem 1.25rem;
-            position: relative;
-        }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 38%, #142544 0%, var(--bg-mid) 46%, var(--bg-bot) 100%);
+      color: #f8fafc;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
 
-        /* Ambient Starfield / Sparkle Backdrop */
-        #ambient-canvas {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
+    /* Ambient floating sparkles */
+    .sparkle-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
 
-        /* ==========================================================================
-           2. DECORATIVE BIRTHDAY HEADER
-           ========================================================================== */
-        header {
-            text-align: center;
-            z-index: 10;
-            margin-top: 0.25rem;
-            padding: 0 0.5rem;
-        }
+    .sparkle {
+      position: absolute;
+      border-radius: 50%;
+      animation: floatTwinkle var(--dur, 6s) ease-in-out infinite;
+      opacity: 0;
+    }
 
-        .eyebrow {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            color: var(--gold-warm);
-            margin-bottom: 0.35rem;
-            opacity: 0.9;
-        }
+    @keyframes floatTwinkle {
+      0%, 100% {
+        transform: translateY(0) scale(0.6);
+        opacity: 0;
+      }
+      50% {
+        transform: translateY(-28px) scale(1.2);
+        opacity: 0.85;
+      }
+    }
 
-        h1 {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: clamp(1.65rem, 5vw, 3rem);
-            font-weight: 900;
-            letter-spacing: 0.04em;
-            background: linear-gradient(
-                120deg,
-                #c59b27 0%,
-                #fff3b0 28%,
-                #ffd700 50%,
-                #fff8d6 72%,
-                #b8860b 100%
-            );
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 18px rgba(255, 215, 0, 0.28));
-            animation: goldShimmer 5s linear infinite;
-            line-height: 1.15;
-        }
+    /* Main layout */
+    .app-shell {
+      position: relative;
+      z-index: 2;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px 14px;
+    }
 
-        @keyframes goldShimmer {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
+    /* Hero Header */
+    header.hero-header {
+      text-align: center;
+      z-index: 5;
+      pointer-events: none;
+      padding-top: 2px;
+    }
 
-        .subtitle {
-            font-size: clamp(0.95rem, 2.4vw, 1.18rem);
-            font-style: italic;
-            color: var(--gold-soft);
-            opacity: 0.85;
-            margin-top: 0.25rem;
-        }
+    header.hero-header h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(1.35rem, 3.3vw, 2.35rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      background: linear-gradient(120deg, #fff8dc 0%, #f7d674 32%, #ffffff 52%, #e3b34c 78%, #fff1b8 100%);
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 26px rgba(242, 201, 107, 0.35);
+      animation: shimmerText 5s linear infinite;
+    }
 
-        /* ==========================================================================
-           3. 3D ASCII BOUQUET VIEWPORT
-           ========================================================================== */
-        .ascii-stage {
-            position: relative;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 820px;
-            flex: 1;
-            margin: 0.4rem 0;
-            cursor: grab;
-        }
+    header.hero-header .subtitle {
+      font-size: clamp(0.68rem, 1.3vw, 0.85rem);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(186, 230, 253, 0.78);
+      margin-top: 2px;
+    }
 
-        .ascii-stage:active {
-            cursor: grabbing;
-        }
+    @keyframes shimmerText {
+      to {
+        background-position: 220% center;
+      }
+    }
 
-        /* Subtle golden aura behind the bouquet */
-        .ascii-stage::before {
-            content: '';
-            position: absolute;
-            width: min(76vw, 440px);
-            height: min(76vw, 440px);
-            border-radius: 50%;
-            background: radial-gradient(
-                circle,
-                rgba(30, 64, 175, 0.22) 0%,
-                rgba(212, 175, 55, 0.08) 45%,
-                transparent 72%
-            );
-            pointer-events: none;
-            z-index: -1;
-        }
+    /* ASCII Viewport */
+    .stage-wrap {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      overflow: hidden;
+    }
 
-        #ascii-output {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-weight: 700;
-            /* Responsive font sizing so full 3D bouquet fits cleanly on mobile & desktop */
-            font-size: clamp(6.2px, 1.52vw, 11.2px);
-            line-height: 1.04;
-            letter-spacing: 0.08em;
-            white-space: pre;
-            text-align: center;
-            text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
-            padding: 0.5rem;
-            border-radius: 16px;
-        }
+    .stage-wrap:active {
+      cursor: grabbing;
+    }
 
-        /* ==========================================================================
-           4. INTERACTIVE CONTROLS BAR
-           ========================================================================== */
-        .controls-panel {
-            z-index: 10;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 0.65rem 1rem;
-            background: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            backdrop-filter: blur(12px);
-            padding: 0.65rem 1.2rem;
-            border-radius: 999px;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
-            max-width: 96vw;
-        }
+    pre#ascii-canvas {
+      font-family: 'Cascadia Mono', 'Fira Code', 'JetBrains Mono', Consolas, 'Courier New', monospace;
+      font-size: clamp(2.65px, 0.56vh, 4.35px);
+      line-height: 0.92;
+      letter-spacing: 0.04em;
+      white-space: pre;
+      text-align: center;
+      transform-origin: center center;
+      transition: transform 0.25s ease;
+      filter: drop-shadow(0 12px 32px rgba(3, 8, 20, 0.85));
+    }
 
-        .btn {
-            background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-            color: var(--gold-soft);
-            border: 1px solid rgba(212, 175, 55, 0.45);
-            padding: 0.42rem 0.9rem;
-            border-radius: 999px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            transition: all 0.2s ease;
-        }
+    /* Bottom Control Bar & Music Pill */
+    .controls-bar {
+      z-index: 6;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--panel-border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+    }
 
-        .btn:hover {
-            border-color: var(--gold-bright);
-            color: #ffffff;
-            box-shadow: 0 0 14px rgba(255, 215, 0, 0.28);
-            transform: translateY(-1px);
-        }
+    .btn {
+      background: rgba(255, 255, 255, 0.07);
+      color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
 
-        .btn:active {
-            transform: translateY(0);
-        }
+    .btn:hover {
+      background: rgba(242, 201, 107, 0.2);
+      border-color: rgba(242, 201, 107, 0.55);
+      color: #fff8dc;
+    }
 
-        .slider-group {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--text-muted);
-        }
+    .btn.music-btn {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.24), rgba(242, 201, 107, 0.24));
+      border-color: rgba(242, 201, 107, 0.5);
+      color: #fef3c7;
+    }
 
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 82px;
-            height: 4px;
-            background: rgba(148, 163, 184, 0.3);
-            border-radius: 4px;
-            outline: none;
-            cursor: pointer;
-        }
+    .divider {
+      width: 1px;
+      height: 16px;
+      background: rgba(255, 255, 255, 0.15);
+    }
 
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--gold-bright);
-            box-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
-            cursor: pointer;
-        }
+    .hint-tag {
+      font-size: 0.7rem;
+      color: rgba(203, 213, 225, 0.75);
+      padding: 0 4px;
+    }
 
-        .hint {
-            width: 100%;
-            text-align: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            margin-top: 0.45rem;
-            z-index: 10;
-            opacity: 0.8;
-        }
+    /* Hidden YouTube iframe for background audio */
+    #yt-player-holder {
+      position: fixed;
+      width: 1px;
+      height: 1px;
+      bottom: 0;
+      right: 0;
+      opacity: 0.01;
+      pointer-events: none;
+      overflow: hidden;
+    }
 
-        @media (max-width: 600px) {
-            .controls-panel {
-                border-radius: 20px;
-                padding: 0.6rem 0.9rem;
-            }
-            #ascii-output {
-                font-size: clamp(5.2px, 1.72vw, 8px);
-                letter-spacing: 0.04em;
-            }
-        }
-    </style>
+    @media (max-width: 640px) {
+      pre#ascii-canvas {
+        font-size: clamp(2.15px, 0.68vw, 3.2px);
+      }
+      .hint-tag {
+        display: none;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="sparkle-layer" id="sparkles"></div>
 
-    <!-- Ambient Sparkles Canvas -->
-    <canvas id="ambient-canvas" aria-hidden="true"></canvas>
-
-    <!-- Header & Title -->
-    <header>
-        <div class="eyebrow">✦ Midnight Blue Roses &amp; Gold Filigree ✦</div>
-        <h1>Happy Birthday BaoBao!</h1>
-        <p class="subtitle">Wishing you endless sparkle, warmth, and joy on your special day</p>
+  <div class="app-shell">
+    <header class="hero-header">
+      <h1>Happy Birthday BaoBao!</h1>
+      <div class="subtitle">Blue Roses · Gold Accents · Kinder Bueno · Just The Way You Are</div>
     </header>
 
-    <!-- 3D Rotating ASCII Bouquet Stage -->
-    <main class="ascii-stage" id="stage" title="Drag horizontally to spin the 3D bouquet">
-        <pre id="ascii-output" aria-label="3D Rotating ASCII Flower Bouquet"></pre>
+    <main class="stage-wrap" id="stage">
+      <pre id="ascii-canvas" aria-label="3D Rotating ASCII Flower Bouquet"></pre>
     </main>
 
-    <!-- Interactive Controls -->
-    <div class="controls-panel">
-        <button id="toggle-spin" class="btn" type="button">⏸ Pause Spin</button>
-        <div class="slider-group">
-            <label for="speed-slider">Speed</label>
-            <input id="speed-slider" type="range" min="0.2" max="2.8" step="0.1" value="1.0">
-        </div>
-        <button id="toggle-sparkles" class="btn" type="button">✨ Sparkles: ON</button>
-        <button id="reset-view" class="btn" type="button">⟲ Front View</button>
+    <div class="controls-bar">
+      <button class="btn" id="toggle-spin">⏸ Pause</button>
+      <button class="btn" id="speed-btn">Speed: 1x</button>
+      <button class="btn" id="zoom-btn">Zoom: 1x</button>
+      <div class="divider"></div>
+      <button class="btn music-btn" id="music-toggle">🔊 Bruno Mars - Just The Way You Are</button>
+      <span class="hint-tag">Drag to spin 360°</span>
     </div>
-    <div class="hint">Drag left or right on the bouquet to spin 360° in 3D</div>
+  </div>
 
-    <script>
-        /* ==========================================================================
-           REAL-TIME 3D Z-BUFFERED ASCII BOUQUET ENGINE
-           Inspired by the Midnight Blue Rose Bouquet with Diamond Centers,
-           White Baby's Breath, Gold Filigree Butterflies, and Black/Gold Wrap
-           ========================================================================== */
-        (function () {
-            const outputEl = document.getElementById('ascii-output');
-            const stageEl = document.getElementById('stage');
-            const toggleSpinBtn = document.getElementById('toggle-spin');
-            const speedSlider = document.getElementById('speed-slider');
-            const toggleSparklesBtn = document.getElementById('toggle-sparkles');
-            const resetViewBtn = document.getElementById('reset-view');
+  <div id="yt-player-holder">
+    <div id="yt-player"></div>
+  </div>
 
-            // Grid dimensions (columns x rows)
-            const COLS = 104;
-            const ROWS = 56;
+  <script>
+    // =========================================================
+    // 1. AMBIENT SPARKLES
+    // =========================================================
+    (function initSparkles() {
+      const container = document.getElementById('sparkles');
+      const colors = ['#fde68a', '#bae6fd', '#ffffff', '#f59e0b', '#7dd3fc'];
+      for (let i = 0; i < 42; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        const size = (Math.random() * 3 + 1.5).toFixed(1);
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.left = (Math.random() * 100).toFixed(2) + '%';
+        s.style.top = (Math.random() * 100).toFixed(2) + '%';
+        s.style.background = colors[i % colors.length];
+        s.style.boxShadow = `0 0 ${size * 3}px ${colors[i % colors.length]}`;
+        s.style.setProperty('--dur', (Math.random() * 5 + 4).toFixed(2) + 's');
+        s.style.animationDelay = (Math.random() * 6).toFixed(2) + 's';
+        container.appendChild(s);
+      }
+    })();
 
-            // Camera & Projection parameters
-            const FOV = 68;
-            const CAM_DIST = 48;
+    // =========================================================
+    // 2. YOUTUBE AUTOPLAY ("Just the Way You Are" - Bruno Mars)
+    // =========================================================
+    let ytPlayer = null;
+    let isPlaying = false;
+    let isMuted = false;
+    const musicBtn = document.getElementById('music-toggle');
 
-            // Rotation State (Horizontal 360 Y-axis + subtle X-axis tilt)
-            let angleY = 0;
-            let angleX = 0.24; // Slight downward look into the lush rose dome
-            let autoSpin = true;
-            let spinSpeed = 1.0;
-            let isDragging = false;
-            let lastPointerX = 0;
-            let lastPointerY = 0;
+    const ytScript = document.createElement('script');
+    ytScript.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(ytScript);
 
-            // 3D Point Cloud / Surface Voxel Array
-            // Each point: { x, y, z, nx, ny, nz, type, phase }
-            const points = [];
+    window.onYouTubeIframeAPIReady = function () {
+      ytPlayer = new YT.Player('yt-player', {
+        height: '1',
+        width: '1',
+        videoId: 'LjhCEhWiKXk', // Bruno Mars - Just The Way You Are
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          loop: 1,
+          playlist: 'LjhCEhWiKXk',
+          playsinline: 1
+        },
+        events: {
+          onReady: function (event) {
+            event.target.setVolume(80);
+            event.target.playVideo();
+            setTimeout(() => {
+              if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
+                const state = ytPlayer.getPlayerState();
+                if (state !== 1) {
+                  event.target.mute();
+                  event.target.playVideo();
+                  isMuted = true;
+                  updateMusicLabel();
+                } else {
+                  isPlaying = true;
+                  isMuted = false;
+                  updateMusicLabel();
+                }
+              }
+            }, 900);
+          },
+          onStateChange: function (event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+              isPlaying = true;
+              updateMusicLabel();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+              isPlaying = false;
+              updateMusicLabel();
+            }
+          }
+        }
+      });
+    };
 
-            function addPoint(x, y, z, nx, ny, nz, type, phase = 0) {
-                const len = Math.hypot(nx, ny, nz) || 1;
-                points.push({
-                    x, y, z,
-                    nx: nx / len,
-                    ny: ny / len,
-                    nz: nz / len,
-                    type,
-                    phase
-                });
+    function updateMusicLabel() {
+      if (!isPlaying) {
+        musicBtn.textContent = '▶ Play Song (Bruno Mars)';
+      } else if (isMuted) {
+        musicBtn.textContent = '🔇 Tap to Unmute Song';
+      } else {
+        musicBtn.textContent = '🔊 Just The Way You Are ♪';
+      }
+    }
+
+    function unlockAudioOnGesture() {
+      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        if (isMuted) {
+          ytPlayer.unMute();
+          ytPlayer.setVolume(80);
+          isMuted = false;
+        }
+        if (!isPlaying) {
+          ytPlayer.playVideo();
+          isPlaying = true;
+        }
+        updateMusicLabel();
+      }
+    }
+
+    ['pointerdown', 'keydown', 'touchstart'].forEach((evt) => {
+      window.addEventListener(evt, unlockAudioOnGesture, { once: true });
+    });
+
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') return;
+      if (isMuted) {
+        ytPlayer.unMute();
+        ytPlayer.setVolume(80);
+        ytPlayer.playVideo();
+        isMuted = false;
+        isPlaying = true;
+      } else if (isPlaying) {
+        ytPlayer.pauseVideo();
+        isPlaying = false;
+      } else {
+        ytPlayer.playVideo();
+        isPlaying = true;
+      }
+      updateMusicLabel();
+    });
+
+    // =========================================================
+    // 3. HIGH-DENSITY 3D ASCII BOUQUET ENGINE
+    // =========================================================
+    const canvasEl = document.getElementById('ascii-canvas');
+    const stageEl = document.getElementById('stage');
+
+    const W = 276;
+    const H = 200;
+    const TOTAL = W * H;
+
+    const zBuffer = new Float32Array(TOTAL);
+    const charBuffer = new Array(TOTAL);
+    const colorBuffer = new Array(TOTAL);
+
+    // Pre-build the 3D point cloud of the bouquet
+    const points = [];
+
+    function addPoint(x, y, z, nx, ny, nz, ch, r, g, b, emissive = 0) {
+      points.push({ x, y, z, nx, ny, nz, ch, r, g, b, emissive });
+    }
+
+    // Deterministic pseudo-random helper for rich organic detail
+    let seed = 1337;
+    function rand() {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    }
+
+    // ---------------------------------------------------------
+    // A. LOW-CUT FRONT / FLARED BACK WRAPPING PAPER & RIBBONS
+    // ---------------------------------------------------------
+    (function buildWrapping() {
+      // Fan-shaped back & side sheets (tall behind, sweeping down in front so flowers pop out!)
+      const sheetCount = 13;
+      for (let s = 0; s < sheetCount; s++) {
+        const t = (s / (sheetCount - 1)) * 2 - 1; // -1 to 1 across back arc
+        const baseAngle = Math.PI + t * 1.48; // centered around back (z < 0)
+        const isFrost = s % 2 === 1;
+        const rCol = isFrost ? 205 : 68;
+        const gCol = isFrost ? 225 : 108;
+        const bCol = isFrost ? 245 : 148;
+
+        const sheetTopY = 17.5 - Math.abs(t) * 6.5 + (s % 3) * 1.1;
+        const sheetBotY = -12.0;
+
+        for (let u = 0; u <= 34; u++) {
+          const uf = u / 34; // 0 bottom -> 1 top
+          const y = sheetBotY + uf * (sheetTopY - sheetBotY);
+          // Flare outward as it rises
+          const rad = 4.2 + Math.pow(uf, 1.15) * 12.6 + (s % 2) * 0.45;
+          const span = 0.24 + uf * 0.16;
+
+          for (let v = -10; v <= 10; v++) {
+            const vf = v / 10;
+            const ang = baseAngle + vf * span;
+            // Crinkle wave
+            const crinkle = Math.sin(vf * Math.PI * 2 + s) * 0.35 * uf;
+            const rr = rad + crinkle;
+            const x = Math.sin(ang) * rr;
+            const z = Math.cos(ang) * rr - 1.2;
+
+            const isEdge = Math.abs(v) >= 9 || u === 34;
+            const ch = isEdge ? '/' : isFrost ? '+' : '#';
+            const boost = isEdge ? 35 : 0;
+            addPoint(
+              x, y, z,
+              Math.sin(ang), 0.25, Math.cos(ang),
+              ch,
+              Math.min(255, rCol + boost),
+              Math.min(255, gCol + boost),
+              Math.min(255, bCol + boost),
+              isEdge ? 0.25 : 0
+            );
+          }
+        }
+      }
+
+      // Low-cut front collar wrap (dips low in front so flowers burst over the edge)
+      for (let i = 0; i < 160; i++) {
+        const ang = (i / 160) * Math.PI * 2;
+        const frontFactor = Math.max(0, Math.cos(ang)); // 1 at front (z > 0)
+        const topY = 2.6 - frontFactor * 4.4; // dips down to y = -1.8 in front!
+        const botY = -11.5;
+
+        for (let j = 0; j <= 22; j++) {
+          const jf = j / 22;
+          const y = botY + jf * (topY - botY);
+          const fold = Math.sin(ang * 9) * 0.45 * jf;
+          const rad = 3.6 + Math.pow(jf, 1.1) * 7.8 + fold;
+          const x = Math.sin(ang) * rad;
+          const z = Math.cos(ang) * rad;
+
+          const isRim = j >= 20;
+          addPoint(
+            x, y, z,
+            Math.sin(ang), 0.15, Math.cos(ang),
+            isRim ? '=' : '%',
+            isRim ? 235 : 74,
+            isRim ? 245 : 116,
+            isRim ? 255 : 158,
+            isRim ? 0.3 : 0
+          );
+        }
+      }
+
+      // Billowing white organza tulle ruffle collar around waist
+      for (let i = 0; i < 240; i++) {
+        const ang = (i / 240) * Math.PI * 2;
+        const frontDip = Math.max(0, Math.cos(ang)) * 2.8;
+        const waveY = Math.sin(ang * 11) * 1.1 - 2.6 - frontDip;
+        const baseR = 8.4 + Math.cos(ang * 7) * 1.1;
+
+        for (let k = 0; k < 7; k++) {
+          const kf = k / 6;
+          const r = baseR + kf * 2.4;
+          const y = waveY + Math.sin(kf * Math.PI) * 1.3;
+          const x = Math.sin(ang) * r;
+          const z = Math.cos(ang) * r + 0.6;
+          addPoint(x, y, z, Math.sin(ang), 0.5, Math.cos(ang), '~', 238, 246, 255, 0.25);
+        }
+      }
+
+      // Flared lower wrap skirt
+      for (let i = 0; i < 140; i++) {
+        const ang = (i / 140) * Math.PI * 2;
+        const isStripe = i % 14 < 4;
+        for (let j = 0; j <= 18; j++) {
+          const jf = j / 18;
+          const y = -10.5 - jf * 9.5;
+          const rad = 3.5 + jf * 3.8 + Math.sin(ang * 10) * 0.25;
+          const x = Math.sin(ang) * rad;
+          const z = Math.cos(ang) * rad;
+          addPoint(
+            x, y, z,
+            Math.sin(ang), -0.2, Math.cos(ang),
+            isStripe ? ':' : '#',
+            isStripe ? 185 : 58,
+            isStripe ? 210 : 94,
+            isStripe ? 235 : 134
+          );
+        }
+      }
+
+      // Flowing white satin & gold-edged ribbons at the front waist
+      for (let strand = -2; strand <= 2; strand++) {
+        if (strand === 0) continue;
+        const startAng = strand * 0.22;
+        for (let t = 0; t <= 36; t++) {
+          const tf = t / 36;
+          const y = -7.5 - tf * 11.5;
+          const sway = Math.sin(tf * 4.5 + strand) * 0.9 + strand * (0.6 + tf * 1.4);
+          const z = 5.4 + tf * 2.1 + Math.cos(tf * 3) * 0.4;
+          for (let w = -1; w <= 1; w++) {
+            const isGoldEdge = Math.abs(w) === 1 && Math.abs(strand) === 2;
+            addPoint(
+              sway + w * 0.28 + Math.sin(startAng) * 2.2,
+              y,
+              z,
+              0, 0.1, 1,
+              isGoldEdge ? '*' : '|',
+              isGoldEdge ? 250 : 245,
+              isGoldEdge ? 210 : 249,
+              isGoldEdge ? 110 : 255,
+              0.3
+            );
+          }
+        }
+      }
+
+      // Tucked gift card with mini golden clothespin on upper-right back
+      const cardCenter = { x: 6.4, y: 12.6, z: -4.2 };
+      for (let cx = -2.2; cx <= 2.2; cx += 0.35) {
+        for (let cy = -3.0; cy <= 3.0; cy += 0.35) {
+          const rotZ = -0.24;
+          const rx = cx * Math.cos(rotZ) - cy * Math.sin(rotZ);
+          const ry = cx * Math.sin(rotZ) + cy * Math.cos(rotZ);
+          const isBorder = Math.abs(cx) > 1.85 || Math.abs(cy) > 2.65;
+          addPoint(
+            cardCenter.x + rx,
+            cardCenter.y + ry,
+            cardCenter.z + ry * 0.18,
+            0.2, 0.2, 0.95,
+            isBorder ? '*' : '.',
+            isBorder ? 245 : 244,
+            isBorder ? 204 : 247,
+            isBorder ? 105 : 252,
+            0.35
+          );
+        }
+      }
+    })();
+
+    // ---------------------------------------------------------
+    // B. FLOWER GENERATORS (Roses, Peonies, Ranunculus, Gold)
+    // ---------------------------------------------------------
+    function buildRose(cx, cy, cz, nx, ny, nz, radius, palette) {
+      // Create orthonormal basis pointing along normal (nx, ny, nz)
+      const len = Math.hypot(nx, ny, nz) || 1;
+      const ux = nx / len, uy = ny / len, uz = nz / len;
+      const upX = Math.abs(uy) > 0.9 ? 1 : 0;
+      const upY = Math.abs(uy) > 0.9 ? 0 : 1;
+      const upZ = 0;
+
+      // right = up x u
+      let rx = upY * uz - upZ * uy;
+      let ry = upZ * ux - upX * uz;
+      let rz = upX * uy - upY * ux;
+      const rLen = Math.hypot(rx, ry, rz) || 1;
+      rx /= rLen; ry /= rLen; rz /= rLen;
+
+      // forward = u x right
+      const fx = uy * rz - uz * ry;
+      const fy = uz * rx - ux * rz;
+      const fz = ux * ry - uy * rx;
+
+      const rings = 7;
+      for (let ring = 0; ring < rings; ring++) {
+        const rf = ring / (rings - 1); // 0 center -> 1 outer petal rim
+        const ringRad = (0.14 + rf * 0.86) * radius;
+        const ptsInRing = Math.max(8, Math.floor(10 + rf * 24));
+        const cupHeight = (1 - Math.pow(rf, 1.45)) * radius * 0.62;
+
+        for (let p = 0; p < ptsInRing; p++) {
+          const theta = (p / ptsInRing) * Math.PI * 2 + ring * 0.65;
+          const petalWave = 1 + 0.16 * Math.sin(theta * (3 + (ring % 3)) + ring);
+          const localR = ringRad * petalWave;
+
+          const lx = Math.cos(theta) * localR;
+          const ly = Math.sin(theta) * localR;
+          const lz = cupHeight + Math.sin(theta * 5) * 0.14 * rf;
+
+          const wx = cx + rx * lx + fx * ly + ux * lz;
+          const wy = cy + ry * lx + fy * ly + uy * lz;
+          const wz = cz + rz * lx + fz * ly + uz * lz;
+
+          // Color gradient from deep center to luminous rim
+          let col;
+          let ch = '@';
+          let em = 0.08;
+          if (rf < 0.28) {
+            col = palette.core;
+            ch = '@';
+          } else if (rf < 0.72) {
+            col = palette.mid;
+            ch = '0';
+          } else {
+            col = palette.rim;
+            ch = 'o';
+            em = 0.22;
+          }
+
+          addPoint(
+            wx, wy, wz,
+            ux * 0.7 + (rx * Math.cos(theta) + fx * Math.sin(theta)) * 0.5,
+            uy * 0.7 + (ry * Math.cos(theta) + fy * Math.sin(theta)) * 0.5,
+            uz * 0.7 + (rz * Math.cos(theta) + fz * Math.sin(theta)) * 0.5,
+            ch,
+            col[0], col[1], col[2],
+            em
+          );
+        }
+      }
+    }
+
+    function buildPeony(cx, cy, cz, nx, ny, nz, radius) {
+      const len = Math.hypot(nx, ny, nz) || 1;
+      const ux = nx / len, uy = ny / len, uz = nz / len;
+      for (let i = 0; i < 88; i++) {
+        const phi = Math.acos(1 - (i / 88) * 1.15);
+        const theta = i * 2.39996; // golden angle
+        const ruffle = 1 + 0.22 * Math.sin(theta * 6) * Math.sin(phi * 4);
+        const r = radius * ruffle;
+
+        const sx = Math.sin(phi) * Math.cos(theta) * r;
+        const sy = Math.sin(phi) * Math.sin(theta) * r;
+        const sz = Math.cos(phi) * r * 0.75;
+
+        const isGoldCore = phi < 0.36;
+        addPoint(
+          cx + sx + ux * 0.5,
+          cy + sy + uy * 0.5,
+          cz + sz + uz * 0.5,
+          sx / r, sy / r, sz / r,
+          isGoldCore ? '*' : '8',
+          isGoldCore ? 252 : 248,
+          isGoldCore ? 211 : 244,
+          isGoldCore ? 77 : 234,
+          isGoldCore ? 0.45 : 0.2
+        );
+      }
+    }
+
+    // ---------------------------------------------------------
+    // C. POPULATE 48 POPPED-OUT BLOOMS OVER THE LOW FRONT WRAP
+    // ---------------------------------------------------------
+    const palettes = {
+      skyWhite: {
+        core: [14, 95, 195],
+        mid: [56, 178, 248],
+        rim: [232, 246, 255]
+      },
+      royalIce: {
+        core: [22, 62, 168],
+        mid: [48, 128, 232],
+        rim: [204, 234, 255]
+      },
+      creamGold: {
+        core: [218, 165, 55],
+        mid: [248, 235, 198],
+        rim: [255, 252, 242]
+      },
+      periwinkle: {
+        core: [67, 88, 198],
+        mid: [129, 152, 248],
+        rim: [236, 242, 255]
+      }
+    };
+
+    // Build an abundant 3D dome of 48 flowers bursting forward in front (+Z) and all around
+    const totalFlowers = 48;
+    for (let i = 0; i < totalFlowers; i++) {
+      const t = i / totalFlowers;
+      // Golden spiral across a lush forward-bulging dome
+      const goldenAngle = i * 2.3999632;
+      const polar = Math.acos(1 - t * 1.18); // reaches past equator so flowers spill over the low front wrap!
+
+      const domeRx = 11.4;
+      const domeRy = 11.8;
+      const domeRz = 11.6;
+
+      let x = Math.sin(polar) * Math.cos(goldenAngle) * domeRx;
+      let z = Math.sin(polar) * Math.sin(goldenAngle) * domeRz;
+      let y = Math.cos(polar) * domeRy + 4.4;
+
+      // Push front blooms forward so they visibly pop out of the wrap
+      if (z > 0) {
+        z += 2.2 * Math.cos((y - 4.4) / 14);
+        y -= 1.3;
+      }
+
+      const rPick = i % 7;
+      if (rPick === 2 || rPick === 5) {
+        buildPeony(x, y, z, x, y - 1, z + 3, 2.05);
+      } else {
+        const pal =
+          rPick === 0 || rPick === 3
+            ? palettes.skyWhite
+            : rPick === 1 || rPick === 4
+            ? palettes.royalIce
+            : rPick === 6
+            ? palettes.creamGold
+            : palettes.periwinkle;
+        const size = 2.05 + (i % 3) * 0.25;
+        buildRose(x, y, z, x, y - 0.5, z + 3.5, size, pal);
+      }
+    }
+
+    // ---------------------------------------------------------
+    // D. 5 DETAILED 3D KINDER BUENO BARS TUCKED IN THE BOUQUET
+    // ---------------------------------------------------------
+    function buildKinderBueno(cx, cy, cz, tiltZ, tiltX, yawY) {
+      // Bar dimensions: width 2.6, height 6.4, thickness 1.1
+      const cosZ = Math.cos(tiltZ), sinZ = Math.sin(tiltZ);
+      const cosX = Math.cos(tiltX), sinX = Math.sin(tiltX);
+      const cosY = Math.cos(yawY), sinY = Math.sin(yawY);
+
+      function transform(lx, ly, lz) {
+        // Rotate Z
+        let x1 = lx * cosZ - ly * sinZ;
+        let y1 = lx * sinZ + ly * cosZ;
+        let z1 = lz;
+        // Rotate X
+        let y2 = y1 * cosX - z1 * sinX;
+        let z2 = y1 * sinX + z1 * cosX;
+        let x2 = x1;
+        // Rotate Y
+        let x3 = x2 * cosY + z2 * sinY;
+        let z3 = -x2 * sinY + z2 * cosY;
+        return [cx + x3, cy + y2, cz + z3];
+      }
+
+      for (let lx = -1.25; lx <= 1.25; lx += 0.22) {
+        for (let ly = -3.1; ly <= 3.1; ly += 0.22) {
+          for (let side of [-1, 1]) {
+            const lz = side * 0.52;
+            const [wx, wy, wz] = transform(lx, ly, lz);
+
+            // Signature Kinder Bueno styling:
+            // Top crimp & bottom crimp: silver-white foil
+            // Upper half: glossy white wrapper with red "Kinder" stripe
+            // Lower half: rich milk-chocolate wafer segments with hazelnut drizzle!
+            let r = 250, g = 250, b = 252, ch = '#', em = 0.25;
+
+            if (Math.abs(ly) > 2.75) {
+              // Crimped silver-white wrapper ends
+              r = 225; g = 232; b = 240; ch = '=';
+            } else if (ly > 0.35) {
+              // Classic white wrapper with bold red brand band
+              if (ly > 1.15 && ly < 2.05 && Math.abs(lx) < 0.95) {
+                r = 228; g = 34; b = 42; ch = 'B'; em = 0.32; // Kinder red accent
+              } else {
+                r = 252; g = 252; b = 255; ch = '#'; em = 0.28;
+              }
+            } else {
+              // Exposed crispy chocolate-coated hazelnut wafer bar!
+              const ridge = Math.sin(ly * 5.2) * 0.5 + 0.5;
+              const drizzle = Math.sin(lx * 7 + ly * 4) > 0.65;
+              if (drizzle) {
+                r = 62; g = 32; b = 18; ch = '~'; // Dark chocolate drizzle
+              } else {
+                r = Math.floor(138 + ridge * 38);
+                g = Math.floor(82 + ridge * 26);
+                b = Math.floor(44 + ridge * 16);
+                ch = ridge > 0.5 ? 'W' : 'w';
+              }
+              em = 0.12;
             }
 
-            /* ----------------------------------------------------------------------
-               1. BUILD 3D BOUQUET GEOMETRY
-               ---------------------------------------------------------------------- */
-            function buildBouquetModel() {
-                points.length = 0;
+            addPoint(wx, wy, wz, 0, 0.2, side, ch, r, g, b, em);
+          }
+        }
+      }
+    }
 
-                // A. CONICAL BLACK WRAPPING PAPER WITH GOLD TRIM
-                // Y goes from +16 (bottom handle) to -11 (top flared collar)
-                const coneStepsY = 58;
-                for (let i = 0; i <= coneStepsY; i++) {
-                    const t = i / coneStepsY; // 0 = bottom stem tip, 1 = top flared rim
-                    const y = 16.5 - t * 26.5;
+    // Place 5 Kinder Bueno bars artfully angled among the front & upper blooms
+    buildKinderBueno(-5.4, 8.6, 8.6, 0.36, -0.25, -0.35);
+    buildKinderBueno(5.2, 9.2, 8.2, -0.34, -0.24, 0.35);
+    buildKinderBueno(0.1, 11.4, 7.6, 0.06, -0.32, 0.0);
+    buildKinderBueno(-7.6, 3.2, 8.4, 0.52, -0.15, -0.58);
+    buildKinderBueno(7.4, 3.5, 8.2, -0.48, -0.15, 0.58);
 
-                    // Flared lotus/sheet folds around the circumference
-                    const thetaSteps = Math.max(28, Math.floor(32 + t * 96));
-                    for (let j = 0; j < thetaSteps; j++) {
-                        const theta = (j / thetaSteps) * Math.PI * 2;
+    // ---------------------------------------------------------
+    // E. BABY'S BREATH CLOUDS & SHIMMERING GOLD FOLIAGE SPRIGS
+    // ---------------------------------------------------------
+    (function buildFillersAndGold() {
+      // Dense snowy baby's breath clusters tucked between every bloom
+      for (let i = 0; i < 1900; i++) {
+        const u = rand();
+        const v = rand();
+        const theta = u * Math.PI * 2;
+        const phi = Math.acos(1 - v * 1.15);
+        const rad = 10.6 + rand() * 3.2;
 
-                        // Create 5 overlapping triangular/petal wrapper sheets like the photo
-                        const foldWave = Math.abs(Math.sin(theta * 2.5 + 0.4));
-                        const petalPeak = Math.pow(foldWave, 1.35);
+        let x = Math.sin(phi) * Math.cos(theta) * rad;
+        let z = Math.sin(phi) * Math.sin(theta) * rad;
+        let y = Math.cos(phi) * rad + 4.5;
+        if (z > 0) z += 1.5;
 
-                        // Top edge rises into dramatic pointed wrapping paper corners
-                        const maxT = 0.76 + 0.24 * petalPeak;
-                        if (t > maxT) continue;
+        const isGoldDust = i % 9 === 0;
+        addPoint(
+          x, y, z,
+          x / rad, y / rad, z / rad,
+          isGoldDust ? '✦' : i % 2 === 0 ? '·' : '°',
+          isGoldDust ? 255 : 244,
+          isGoldDust ? 215 : 250,
+          isGoldDust ? 95 : 255,
+          isGoldDust ? 0.55 : 0.3
+        );
+      }
 
-                        // Radius widens gracefully upward with subtle sheet overlap step
-                        const sheetStep = 0.55 * Math.sin(theta * 5);
-                        const baseR = 1.45 + Math.pow(t, 1.15) * 12.6 + sheetStep * t;
+      // 18 Metallic Gold Eucalyptus & Fern Sprigs radiating around & through the bouquet
+      const sprigCount = 18;
+      for (let s = 0; s < sprigCount; s++) {
+        const ang = (s / sprigCount) * Math.PI * 2;
+        const elevation = 0.25 + (s % 4) * 0.24;
+        for (let step = 0; step < 14; step++) {
+          const dist = 7.5 + step * 0.58;
+          const x = Math.sin(ang) * Math.cos(elevation) * dist;
+          const z = Math.cos(ang) * Math.cos(elevation) * dist + (Math.cos(ang) > 0 ? 1.4 : 0);
+          const y = 3.8 + Math.sin(elevation) * dist + Math.sin(step * 0.4) * 0.5;
 
-                        const x = Math.cos(theta) * baseR;
-                        const z = Math.sin(theta) * baseR;
+          // Stem + alternating gold leaves
+          addPoint(x, y, z, 0, 1, 0, '/', 235, 185, 65, 0.45);
+          if (step > 2) {
+            const side = step % 2 === 0 ? 1 : -1;
+            const lx = x + Math.cos(ang) * side * 0.75;
+            const lz = z - Math.sin(ang) * side * 0.75;
+            addPoint(lx, y + 0.25, lz, 0, 1, 0, '♦', 255, 218, 98, 0.55);
+          }
+        }
+      }
+    })();
 
-                        // Outward normal
-                        const nx = Math.cos(theta);
-                        const nz = Math.sin(theta);
-                        const ny = -0.35;
+    // =========================================================
+    // 4. REAL-TIME 3D Z-BUFFERED ASCII RENDERER
+    // =========================================================
+    let angleY = 0.18;
+    let isSpinning = true;
+    let speedMult = 1;
+    let zoomMult = 1;
+    let isDragging = false;
+    let lastClientX = 0;
+    let velocityY = 0;
 
-                        // Gold trim border along the top edges and vertical sheet seams!
-                        const distToTopEdge = maxT - t;
-                        const seamProximity = Math.abs(Math.sin(theta * 2.5 + 0.4));
-                        const isGoldEdge = (distToTopEdge < 0.042) || (t > 0.32 && seamProximity < 0.045);
+    const camDist = 64;
+    const fovX = 195;
+    const fovY = 104;
 
-                        if (isGoldEdge) {
-                            addPoint(x, y, z, nx, ny, nz, 'gold_trim', theta);
-                        } else {
-                            addPoint(x, y, z, nx, ny, nz, 'black_wrap', theta);
-                        }
-                    }
-                }
+    // Key light direction (front-top-right)
+    const lx = 0.42, ly = 0.65, lz = 0.63;
 
-                // B. RIBBON TIE & STEMS AT THE BASE
-                for (let y = 15.5; y <= 20.5; y += 0.45) {
-                    for (let a = 0; a < Math.PI * 2; a += 0.35) {
-                        const r = 1.15 + 0.15 * Math.sin(a * 3);
-                        addPoint(Math.cos(a) * r, y, Math.sin(a) * r, Math.cos(a), 0, Math.sin(a), 'stem');
-                    }
-                }
-                // Gold & white ribbon band around waist (y ~ 15.2)
-                for (let y = 14.5; y <= 15.8; y += 0.3) {
-                    for (let a = 0; a < Math.PI * 2; a += 0.14) {
-                        const r = 1.85;
-                        addPoint(Math.cos(a) * r, y, Math.sin(a) * r, Math.cos(a), 0, Math.sin(a), 'ribbon');
-                    }
-                }
+    function renderFrame() {
+      zBuffer.fill(-1e9);
+      charBuffer.fill(' ');
+      colorBuffer.fill('');
 
-                // C. LUSH DOME OF DEEP MIDNIGHT BLUE ROSES WITH DIAMOND CENTERS
-                // Arrange 19 sculpted 3D roses in concentric spherical dome rings
-                const roseCenters = [
-                    // Center crown rose
-                    { x: 0, y: -9.8, z: 0, r: 2.75 },
-                    // Inner ring (6 roses)
-                    ...Array.from({ length: 6 }, (_, k) => {
-                        const a = (k / 6) * Math.PI * 2 + 0.2;
-                        return { x: Math.cos(a) * 4.7, y: -8.6, z: Math.sin(a) * 4.7, r: 2.65 };
-                    }),
-                    // Outer ring (12 roses)
-                    ...Array.from({ length: 12 }, (_, k) => {
-                        const a = (k / 12) * Math.PI * 2;
-                        return { x: Math.cos(a) * 8.6, y: -6.2, z: Math.sin(a) * 8.6, r: 2.55 };
-                    })
-                ];
+      const cosA = Math.cos(angleY);
+      const sinA = Math.sin(angleY);
+      const scale = zoomMult;
 
-                roseCenters.forEach((rose, idx) => {
-                    // Normal pointing outward from bouquet center
-                    const dirLen = Math.hypot(rose.x, rose.y + 4, rose.z) || 1;
-                    const ux = rose.x / dirLen;
-                    const uy = (rose.y + 4) / dirLen;
-                    const uz = rose.z / dirLen;
+      for (let i = 0; i < points.length; i++) {
+        const p = points[i];
 
-                    // Create spiral rose petals around each rose center
-                    const petalLayers = 14;
-                    for (let p = 0; p < petalLayers; p++) {
-                        const pt = p / petalLayers; // 0 = inner bud, 1 = outer open petals
-                        const radius = 0.45 + pt * (rose.r - 0.35);
-                        const swirlAngle = p * 1.15 + idx;
-                        const arcSteps = Math.floor(10 + pt * 14);
+        // Rotate point around Y axis
+        const rx = p.x * cosA + p.z * sinA;
+        const rz = -p.x * sinA + p.z * cosA;
+        const ry = p.y - 1.5; // center bouquet vertically
 
-                        for (let s = 0; s < arcSteps; s++) {
-                            const phi = swirlAngle + (s / arcSteps) * Math.PI * 1.65;
-                            // Local tangent coordinates on the rose cap
-                            const cupHeight = Math.sin(pt * Math.PI) * 0.85 - pt * 0.55;
-                            const lx = Math.cos(phi) * radius;
-                            const lz = Math.sin(phi) * radius;
+        const depth = camDist - rz;
+        if (depth <= 4) continue;
 
-                            // Tilt rose slightly outward along dome normal
-                            const px = rose.x + lx + ux * cupHeight;
-                            const py = rose.y - cupHeight * 0.9 + (lx * ux + lz * uz) * 0.25;
-                            const pz = rose.z + lz + uz * cupHeight;
+        const invZ = (1 / depth) * scale;
+        const sx = Math.floor(W * 0.5 + rx * fovX * invZ);
+        const sy = Math.floor(H * 0.52 - ry * fovY * invZ);
 
-                            const nx = lx * 0.7 + ux * 0.6;
-                            const ny = -0.8 + uy * 0.4;
-                            const nz = lz * 0.7 + uz * 0.6;
+        if (sx < 0 || sx >= W || sy < 0 || sy >= H) continue;
 
-                            const shadeType = pt > 0.72 ? 'rose_outer' : (pt > 0.35 ? 'rose_mid' : 'rose_inner');
-                            addPoint(px, py, pz, nx, ny, nz, shadeType, idx + pt * 3);
-                        }
-                    }
+        const idx = sy * W + sx;
+        if (rz > zBuffer[idx]) {
+          zBuffer[idx] = rz;
 
-                    // Sparkling Diamond Gem embedded right in the center of every rose!
-                    const gemX = rose.x + ux * 0.35;
-                    const gemY = rose.y - 0.55;
-                    const gemZ = rose.z + uz * 0.35;
-                    addPoint(gemX, gemY, gemZ, ux, -1, uz, 'diamond', idx * 1.3);
-                    addPoint(gemX + 0.22, gemY, gemZ, ux, -1, uz, 'diamond', idx * 1.3 + 0.5);
-                    addPoint(gemX, gemY, gemZ + 0.22, ux, -1, uz, 'diamond', idx * 1.3 + 1.0);
-                });
+          // Rotate normal for directional lighting
+          const rnx = p.nx * cosA + p.nz * sinA;
+          const rnz = -p.nx * sinA + p.nz * cosA;
+          const rny = p.ny;
 
-                // D. DELICATE WHITE BABY'S BREATH CLUSTERS (Gypsophila)
-                // Tucked organically between the blue roses and around the bouquet rim
-                const breathClusters = [
-                    { x: -3.2, y: -9.6, z: 2.8 },
-                    { x: 3.5,  y: -9.5, z: -2.4 },
-                    { x: -6.8, y: -7.5, z: -3.6 },
-                    { x: 6.9,  y: -7.4, z: 3.5 },
-                    { x: 0.4,  y: -7.2, z: 7.4 },
-                    { x: -0.6, y: -7.3, z: -7.5 },
-                    { x: -8.8, y: -5.4, z: 4.2 },
-                    { x: 8.6,  y: -5.5, z: -4.4 },
-                    { x: 4.5,  y: -6.0, z: -8.2 },
-                    { x: -4.8, y: -5.8, z: 8.0 },
-                    { x: 0.0,  y: -5.2, z: 10.2 },
-                    { x: 9.8,  y: -5.0, z: 0.8 },
-                    { x: -9.7, y: -5.1, z: -1.1 }
-                ];
+          const diff = Math.max(0, rnx * lx + rny * ly + rnz * lz);
+          const shade = Math.min(1.25, 0.48 + diff * 0.68 + p.emissive);
 
-                breathClusters.forEach((c, cIdx) => {
-                    for (let b = 0; b < 22; b++) {
-                        // Deterministic pseudo-random scatter for airy floret puffs
-                        const a1 = (b * 2.39996) + cIdx;
-                        const a2 = Math.sin(b * 1.7 + cIdx) * 1.2;
-                        const dist = 0.4 + ((b * 7) % 10) * 0.16;
+          const cr = Math.min(255, Math.floor(p.r * shade));
+          const cg = Math.min(255, Math.floor(p.g * shade));
+          const cb = Math.min(255, Math.floor(p.b * shade));
 
-                        const bx = c.x + Math.cos(a1) * Math.cos(a2) * dist;
-                        const by = c.y + Math.sin(a2) * dist * 0.75 - 0.35;
-                        const bz = c.z + Math.sin(a1) * Math.cos(a2) * dist;
+          charBuffer[idx] = p.ch;
+          colorBuffer[idx] = `rgb(${cr},${cg},${cb})`;
+        }
+      }
 
-                        addPoint(bx, by, bz, 0, -1, 0, 'babys_breath', cIdx + b);
-                    }
-                });
+      // Build colored HTML rows efficiently with span run-length batching
+      let out = '';
+      for (let y = 0; y < H; y++) {
+        const rowOffset = y * W;
+        let currentColor = '';
+        let run = '';
 
-                // E. TWO ORNATE GOLD FILIGREE BUTTERFLIES
-                // Placed just like the photo: one upper-left, one lower-right perched on the roses
-                function addGoldButterfly(cx, cy, cz, yaw, pitch, scale) {
-                    const cosY = Math.cos(yaw), sinY = Math.sin(yaw);
-                    const cosP = Math.cos(pitch), sinP = Math.sin(pitch);
+        for (let x = 0; x < W; x++) {
+          const idx = rowOffset + x;
+          const ch = charBuffer[idx];
+          const col = colorBuffer[idx];
 
-                    function transformAndAdd(lx, ly, lz, isEdge) {
-                        // Pitch around X
-                        const y1 = ly * cosP - lz * sinP;
-                        const z1 = ly * sinP + lz * cosP;
-                        // Yaw around Y
-                        const x2 = lx * cosY + z1 * sinY;
-                        const z2 = -lx * sinY + z1 * cosY;
-
-                        addPoint(
-                            cx + x2 * scale,
-                            cy + y1 * scale,
-                            cz + z2 * scale,
-                            0, -1, 0.2,
-                            isEdge ? 'butterfly_gold_bright' : 'butterfly_gold',
-                            lx + lz
-                        );
-                    }
-
-                    // Butterfly body & antennae
-                    for (let t = -1.4; t <= 1.4; t += 0.22) {
-                        transformAndAdd(0, -0.1, t, true);
-                    }
-                    transformAndAdd(-0.35, -0.35, -1.75, true);
-                    transformAndAdd(0.35, -0.35, -1.75, true);
-
-                    // Left & Right Sculpted Wings (upper forewing + lower hindwing)
-                    [-1, 1].forEach(side => {
-                        const wingDihedral = 0.38; // Slight V-angle of open wings
-                        // Forewing parametric loop
-                        for (let u = 0.15; u <= 1.0; u += 0.14) {
-                            for (let a = -0.3; a <= 1.35; a += 0.14) {
-                                const r = u * (2.65 * Math.sin(a + 0.35));
-                                const wx = side * Math.cos(a * 0.75) * r;
-                                const wz = -Math.sin(a * 0.85) * r * 0.95 - 0.2;
-                                const wy = -Math.abs(wx) * wingDihedral - 0.15;
-                                const isRim = u > 0.86 || a < -0.15 || a > 1.2;
-                                // Leave delicate filigree cutouts inside wing
-                                if (isRim || Math.sin(u * 12 + a * 8) > -0.15) {
-                                    transformAndAdd(wx, wy, wz, isRim);
-                                }
-                            }
-                        }
-                        // Hindwing parametric loop
-                        for (let u = 0.15; u <= 1.0; u += 0.16) {
-                            for (let a = 0.1; a <= 1.45; a += 0.16) {
-                                const r = u * (1.95 * Math.sin(a));
-                                const wx = side * Math.cos(a * 0.65) * r * 0.88;
-                                const wz = Math.sin(a * 0.9) * r + 0.35;
-                                const wy = -Math.abs(wx) * wingDihedral - 0.1;
-                                const isRim = u > 0.85;
-                                if (isRim || Math.cos(u * 10 - a * 7) > -0.1) {
-                                    transformAndAdd(wx, wy, wz, isRim);
-                                }
-                            }
-                        }
-                    });
-                }
-
-                // Upper-left gold butterfly & lower-right gold butterfly (matching photo)
-                addGoldButterfly(-3.4, -10.4, 3.2, -0.55, 0.32, 1.05);
-                addGoldButterfly(4.6, -7.8, 6.4, 0.65, 0.48, 1.12);
+          if (col !== currentColor) {
+            if (run.length > 0) {
+              out += currentColor ? `<span style="color:${currentColor}">${run}</span>` : run;
+              run = '';
             }
+            currentColor = col;
+          }
+          run += ch;
+        }
+        if (run.length > 0) {
+          out += currentColor ? `<span style="color:${currentColor}">${run}</span>` : run;
+        }
+        out += '\n';
+      }
 
-            /* ----------------------------------------------------------------------
-               2. 3D Z-BUFFER ASCII PROJECTION & SHADING RENDERER
-               ---------------------------------------------------------------------- */
-            const zBuffer = new Float32Array(COLS * ROWS);
-            const charBuffer = new Array(COLS * ROWS);
-            const colorBuffer = new Array(COLS * ROWS);
+      canvasEl.innerHTML = out;
+    }
 
-            // Light direction (top-front-right warm studio key light)
-            const LX = 0.45, LY = -0.75, LZ = 0.55;
-            const lLen = Math.hypot(LX, LY, LZ);
-            const lightX = LX / lLen, lightY = LY / lLen, lightZ = LZ / lLen;
+    function animate() {
+      if (!isDragging) {
+        if (isSpinning) {
+          angleY += 0.014 * speedMult;
+        } else if (Math.abs(velocityY) > 0.0002) {
+          angleY += velocityY;
+          velocityY *= 0.94;
+        }
+      }
+      renderFrame();
+      requestAnimationFrame(animate);
+    }
 
-            function renderFrame(timeMs) {
-                const time = timeMs * 0.001;
+    // =========================================================
+    // 5. INTERACTIVE CONTROLS & DRAG TO SPIN
+    // =========================================================
+    stageEl.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      lastClientX = e.clientX;
+      velocityY = 0;
+    });
 
-                // Clear buffers
-                zBuffer.fill(-Infinity);
-                charBuffer.fill(' ');
-                colorBuffer.fill('');
+    window.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - lastClientX;
+      lastClientX = e.clientX;
+      velocityY = dx * 0.0085;
+      angleY += velocityY;
+    });
 
-                const cosY = Math.cos(angleY);
-                const sinY = Math.sin(angleY);
-                const cosX = Math.cos(angleX);
-                const sinX = Math.sin(angleX);
+    window.addEventListener('pointerup', () => {
+      isDragging = false;
+    });
 
-                for (let i = 0; i < points.length; i++) {
-                    const p = points[i];
+    const toggleSpinBtn = document.getElementById('toggle-spin');
+    toggleSpinBtn.addEventListener('click', () => {
+      isSpinning = !isSpinning;
+      toggleSpinBtn.textContent = isSpinning ? '⏸ Pause' : '▶ Spin';
+    });
 
-                    // 1. Rotate horizontally around Y-axis (360-degree spin)
-                    const x1 = p.x * cosY - p.z * sinY;
-                    const z1 = p.x * sinY + p.z * cosY;
+    const speedBtn = document.getElementById('speed-btn');
+    const speeds = [1, 1.8, 0.5];
+    let speedIdx = 0;
+    speedBtn.addEventListener('click', () => {
+      speedIdx = (speedIdx + 1) % speeds.length;
+      speedMult = speeds[speedIdx];
+      speedBtn.textContent = `Speed: ${speedMult}x`;
+    });
 
-                    // 2. Apply subtle X-axis viewing tilt
-                    const y2 = p.y * cosX - z1 * sinX;
-                    const z2 = p.y * sinX + z1 * cosX;
+    const zoomBtn = document.getElementById('zoom-btn');
+    zoomBtn.addEventListener('click', () => {
+      zoomMult = zoomMult === 1 ? 1.28 : 1;
+      zoomBtn.textContent = `Zoom: ${zoomMult === 1 ? '1x' : '1.3x'}`;
+    });
 
-                    // Rotate normal vector for dynamic specular highlights as it spins
-                    const nx1 = p.nx * cosY - p.nz * sinY;
-                    const nz1 = p.nx * sinY + p.nz * cosY;
-                    const ny2 = p.ny * cosX - nz1 * sinX;
-                    const nz2 = p.ny * sinX + nz1 * cosX;
-
-                    // Perspective projection
-                    const depth = CAM_DIST + z2;
-                    if (depth <= 2) continue;
-                    const invZ = 1 / depth;
-
-                    // Aspect ratio correction (~2.05 because monospace chars are taller than wide)
-                    const screenX = Math.round(COLS * 0.5 + x1 * FOV * invZ * 2.02);
-                    const screenY = Math.round(ROWS * 0.52 + y2 * FOV * invZ * 0.98);
-
-                    if (screenX < 0 || screenX >= COLS || screenY < 0 || screenY >= ROWS) continue;
-
-                    const idx = screenY * COLS + screenX;
-                    // Z-buffer occlusion check (closer points have larger invZ)
-                    if (invZ <= zBuffer[idx]) continue;
-                    zBuffer[idx] = invZ;
-
-                    // Lambertian diffuse + view specular lighting
-                    const diffuse = Math.max(0, nx1 * lightX + ny2 * lightY + nz2 * lightZ);
-                    const lum = Math.min(1, 0.25 + diffuse * 0.85);
-
-                    let ch = '.';
-                    let color = '#94a3b8';
-
-                    switch (p.type) {
-                        case 'black_wrap': {
-                            // Sleek matte black/charcoal wrapping paper
-                            const chars = ['.', ':', '#', '%', '#'];
-                            ch = chars[Math.min(4, Math.floor(lum * 5))];
-                            if (lum > 0.72) color = '#475569';      // Satin sheen highlight
-                            else if (lum > 0.45) color = '#27303f'; // Deep charcoal
-                            else color = '#131824';                 // Rich obsidian fold
-                            break;
-                        }
-                        case 'gold_trim': {
-                            // Metallic gold edge trim on the black wrapping paper
-                            ch = lum > 0.65 ? '=' : (lum > 0.4 ? '/' : '~');
-                            color = lum > 0.68 ? '#ffe875' : '#d4af37';
-                            break;
-                        }
-                        case 'rose_outer': {
-                            const chars = ['o', '0', '@', '&', '8'];
-                            ch = chars[Math.min(4, Math.floor(lum * 5))];
-                            color = lum > 0.72 ? '#3b82f6' : (lum > 0.45 ? '#1d4ed8' : '#102a63');
-                            break;
-                        }
-                        case 'rose_mid': {
-                            const chars = ['c', 'o', '8', '@', '&'];
-                            ch = chars[Math.min(4, Math.floor(lum * 5))];
-                            color = lum > 0.68 ? '#2563eb' : (lum > 0.42 ? '#1e40af' : '#0f2557');
-                            break;
-                        }
-                        case 'rose_inner': {
-                            const chars = ['e', 'o', '@', '8'];
-                            ch = chars[Math.min(3, Math.floor(lum * 4))];
-                            color = lum > 0.65 ? '#1d4ed8' : '#0b1b42';
-                            break;
-                        }
-                        case 'diamond': {
-                            // Twinkling crystal diamond centers inside each rose
-                            const twinkle = Math.sin(time * 5.5 + p.phase);
-                            ch = twinkle > 0.35 ? '✦' : (twinkle > -0.2 ? '*' : '+');
-                            color = twinkle > 0.2 ? '#ffffff' : '#bae6fd';
-                            break;
-                        }
-                        case 'babys_breath': {
-                            // Delicate snowy white baby's breath florets
-                            const breathChars = ['*', '·', '°', '•', '+'];
-                            ch = breathChars[Math.floor(Math.abs(p.phase)) % breathChars.length];
-                            color = lum > 0.55 ? '#ffffff' : '#e2e8f0';
-                            break;
-                        }
-                        case 'butterfly_gold': {
-                            ch = lum > 0.6 ? 'W' : 'M';
-                            color = '#eab308';
-                            break;
-                        }
-                        case 'butterfly_gold_bright': {
-                            const glint = Math.sin(time * 4 + p.phase) > 0.3;
-                            ch = glint ? '8' : 'V';
-                            color = glint ? '#fff3a1' : '#ffd700';
-                            break;
-                        }
-                        case 'ribbon': {
-                            ch = '=';
-                            color = lum > 0.55 ? '#f8fafc' : '#d4af37';
-                            break;
-                        }
-                        case 'stem': {
-                            ch = '|';
-                            color = '#1e3a2f';
-                            break;
-                        }
-                    }
-
-                    charBuffer[idx] = ch;
-                    colorBuffer[idx] = color;
-                }
-
-                // Assemble colored HTML lines efficiently (grouping adjacent spans of identical color)
-                let html = '';
-                for (let r = 0; r < ROWS; r++) {
-                    const rowOffset = r * COLS;
-                    let currentColor = '';
-                    let runText = '';
-
-                    for (let c = 0; c < COLS; c++) {
-                        const idx = rowOffset + c;
-                        const ch = charBuffer[idx];
-                        const col = colorBuffer[idx];
-
-                        if (ch === ' ') {
-                            if (runText.length > 0) {
-                                html += `<span style="color:${currentColor}">${runText}</span>`;
-                                runText = '';
-                                currentColor = '';
-                            }
-                            html += ' ';
-                        } else if (col === currentColor) {
-                            runText += ch;
-                        } else {
-                            if (runText.length > 0) {
-                                html += `<span style="color:${currentColor}">${runText}</span>`;
-                            }
-                            currentColor = col;
-                            runText = ch;
-                        }
-                    }
-
-                    if (runText.length > 0) {
-                        html += `<span style="color:${currentColor}">${runText}</span>`;
-                    }
-                    if (r < ROWS - 1) html += '\n';
-                }
-
-                outputEl.innerHTML = html;
-            }
-
-            /* ----------------------------------------------------------------------
-               3. ANIMATION LOOP & INTERACTIVE DRAG / CONTROLS
-               ---------------------------------------------------------------------- */
-            let lastFrameTime = performance.now();
-
-            function animate(now) {
-                const dt = Math.min(0.05, (now - lastFrameTime) * 0.001);
-                lastFrameTime = now;
-
-                if (autoSpin && !isDragging) {
-                    angleY += dt * 0.85 * spinSpeed;
-                }
-
-                renderFrame(now);
-                requestAnimationFrame(animate);
-            }
-
-            // Mouse & Touch Drag to Spin Horizontally
-            function onPointerDown(clientX, clientY) {
-                isDragging = true;
-                lastPointerX = clientX;
-                lastPointerY = clientY;
-            }
-
-            function onPointerMove(clientX, clientY) {
-                if (!isDragging) return;
-                const dx = clientX - lastPointerX;
-                const dy = clientY - lastPointerY;
-                lastPointerX = clientX;
-                lastPointerY = clientY;
-
-                angleY += dx * 0.012;
-                // Allow gentle vertical tilt inspection while keeping horizontal spin primary
-                angleX = Math.max(-0.25, Math.min(0.68, angleX + dy * 0.006));
-            }
-
-            function onPointerUp() {
-                isDragging = false;
-            }
-
-            stageEl.addEventListener('mousedown', (e) => onPointerDown(e.clientX, e.clientY));
-            window.addEventListener('mousemove', (e) => onPointerMove(e.clientX, e.clientY));
-            window.addEventListener('mouseup', onPointerUp);
-
-            stageEl.addEventListener('touchstart', (e) => {
-                if (e.touches.length === 1) {
-                    onPointerDown(e.touches[0].clientX, e.touches[0].clientY);
-                }
-            }, { passive: true });
-
-            window.addEventListener('touchmove', (e) => {
-                if (isDragging && e.touches.length === 1) {
-                    onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
-                }
-            }, { passive: true });
-
-            window.addEventListener('touchend', onPointerUp);
-
-            // UI Controls
-            toggleSpinBtn.addEventListener('click', () => {
-                autoSpin = !autoSpin;
-                toggleSpinBtn.textContent = autoSpin ? '⏸ Pause Spin' : '▶ Resume Spin';
-            });
-
-            speedSlider.addEventListener('input', (e) => {
-                spinSpeed = parseFloat(e.target.value);
-            });
-
-            resetViewBtn.addEventListener('click', () => {
-                angleY = 0;
-                angleX = 0.24;
-            });
-
-            /* ----------------------------------------------------------------------
-               4. AMBIENT BIRTHDAY SPARKLES CANVAS
-               ---------------------------------------------------------------------- */
-            const canvas = document.getElementById('ambient-canvas');
-            const ctx = canvas.getContext('2d');
-            let sparklesEnabled = true;
-            let particles = [];
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-
-            function initParticles() {
-                particles = Array.from({ length: 55 }, () => ({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: 0.8 + Math.random() * 1.9,
-                    vy: -0.15 - Math.random() * 0.35,
-                    vx: (Math.random() - 0.5) * 0.25,
-                    phase: Math.random() * Math.PI * 2,
-                    isGold: Math.random() > 0.38
-                }));
-            }
-            initParticles();
-
-            toggleSparklesBtn.addEventListener('click', () => {
-                sparklesEnabled = !sparklesEnabled;
-                toggleSparklesBtn.textContent = sparklesEnabled ? '✨ Sparkles: ON' : '✨ Sparkles: OFF';
-                if (!sparklesEnabled) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
-            });
-
-            function animateSparkles(now) {
-                if (sparklesEnabled) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    const t = now * 0.002;
-                    for (const pt of particles) {
-                        pt.x += pt.vx;
-                        pt.y += pt.vy;
-                        if (pt.y < -10) {
-                            pt.y = canvas.height + 10;
-                            pt.x = Math.random() * canvas.width;
-                        }
-                        if (pt.x < -10) pt.x = canvas.width + 10;
-                        if (pt.x > canvas.width + 10) pt.x = -10;
-
-                        const alpha = 0.25 + 0.65 * (0.5 + 0.5 * Math.sin(t + pt.phase));
-                        ctx.beginPath();
-                        ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
-                        ctx.fillStyle = pt.isGold
-                            ? `rgba(255, 215, 0, ${alpha})`
-                            : `rgba(147, 197, 253, ${alpha})`;
-                        ctx.fill();
-                    }
-                }
-                requestAnimationFrame(animateSparkles);
-            }
-
-            // Build 3D model and start loops
-            buildBouquetModel();
-            requestAnimationFrame(animate);
-            requestAnimationFrame(animateSparkles);
-        })();
-    </script>
+    // Start loop
+    animate();
+  </script>
 </body>
 </html>
