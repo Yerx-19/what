@@ -513,6 +513,37 @@
       }
     }
 
+
+    /* Final desktop adjustments: lower the heading slightly and restore both treats
+       at full source color/opacity beside the bouquet. Mobile placement is untouched. */
+    @media (min-width: 641px) {
+      header.hero-header {
+        padding-top: 12px;
+        transform: translateY(8px);
+      }
+      .portrait-ascii-layer {
+        z-index: 3;
+        overflow: visible;
+      }
+      .portrait-ascii.middle-left {
+        left: 0.5vw !important;
+        top: 53% !important;
+        opacity: 1 !important;
+        filter: none !important;
+        transform: translateY(-50%) rotate(-7deg) scale(1.08) !important;
+      }
+      .portrait-ascii.middle-right {
+        right: 0.5vw !important;
+        top: 53% !important;
+        opacity: 1 !important;
+        filter: none !important;
+        transform: translateY(-50%) rotate(7deg) scale(1.08) !important;
+      }
+      .portrait-ascii.middle-left pre,
+      .portrait-ascii.middle-right pre {
+        filter: none !important;
+      }
+    }
   </style>
 </head>
 <body>
