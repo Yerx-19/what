@@ -451,7 +451,7 @@
       }
     }
 
-    /* Middle-row treats: isolated ASCII cutouts, tilted outward from the bouquet */
+    /* Middle-row treats: keep their source-image colors and transparent cutout look */
     .portrait-ascii.middle-left,
     .portrait-ascii.middle-right {
       top: 50%;
@@ -459,8 +459,29 @@
       overflow: visible;
       -webkit-mask-image: none;
       mask-image: none;
-      filter: saturate(1.18) contrast(1.12) brightness(1.08);
+      filter: none;
       z-index: 4;
+    }
+
+    /* Desktop: let the treats sit beside the bouquet as soft background accents.
+       They remain behind the bouquet layer, so the center stays clear. */
+    @media (min-width: 641px) {
+      .portrait-ascii.middle-left {
+        left: 0.5vw;
+        top: 53%;
+        opacity: 0.48;
+        transform: translateY(-50%) rotate(-7deg) scale(1.08);
+      }
+      .portrait-ascii.middle-right {
+        right: 0.5vw;
+        top: 53%;
+        opacity: 0.48;
+        transform: translateY(-50%) rotate(7deg) scale(1.08);
+      }
+      .portrait-ascii.middle-left pre,
+      .portrait-ascii.middle-right pre {
+        font-size: clamp(3.5px, 0.30vw, 4.4px) !important;
+      }
     }
     .portrait-ascii.middle-left {
       left: 12px;
